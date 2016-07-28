@@ -1,24 +1,36 @@
 require 'sidekiq'
 
 module HubHop
+  class Request
+    attr_reader :input
 
-  # If your client is single-threaded, we just need a single connection in our Redis connection pool
-  Sidekiq.configure_client do |config|
-    config.redis = { db: 1 }
-  end
+    def initialize(request_id)
+      @req_id = request_id
+      @input = {}
+    end
 
-  # Sidekiq server is multi-threaded so our Redis connection pool size defaults to concurrency (-c)
-  Sidekiq.configure_server do |config|
-    config.redis = { db: 1}
-  end
+    def run
+      setup
+      process
+      complete
+    end
 
-  class RequestWorker
-    include Sidekiq::Worker
+    def setup
+      HubHop.redis.set "#{@req_id}:completed", "false"
+      data = HubHop.redis.get("#{@req_id}:request")
+      begin
+        @input = JSON.parse(data, symbolize_names: true)
+      rescue Exception => msg
+        raise "Failed to parse the request data in the DB\nMessage: " + msg.message
+      end
+    end
 
-    def perform(id)
-      sleep 1
-      HubHop.redis.set "#{id}:completed", "true"
-      HubHop.redis.set "#{id}:results", { results: true }.to_json
+    def process
+    end
+
+    def complete
+      HubHop.redis.set "#{@req_id}:completed", "true"
+      #HubHop.redis.set "#{id}:results", { results: true }.to_json
     end
   end
 end

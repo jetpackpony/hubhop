@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ZenTest (4.11.1)
     activesupport (4.2.4)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -25,6 +26,8 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
+    rspec-autotest (1.0.0)
+      rspec-core (>= 2.99.0.beta1, < 4.0.0)
     rspec-core (3.4.4)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -52,11 +55,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ZenTest
   byebug
   dotenv
   factory_girl
   redis
   rspec
+  rspec-autotest
   sidekiq
 
 BUNDLED WITH

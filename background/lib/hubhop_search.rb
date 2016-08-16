@@ -9,16 +9,17 @@ end
 module HubHop
   class Search
     include Sidekiq::Worker
-    attr_reader :input, :redis
+    attr_reader :redis
 
     def perform(request_id)
       @redis = Redis.new(db: ENV['REDIS_DB_NUMBER'])
       @req_id = request_id
-      @input = {}
       setup
       process
       complete
     end
+
+    private
 
     def setup
       data = redis.get("#{@req_id}:request")

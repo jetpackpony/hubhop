@@ -9,4 +9,14 @@ FactoryGirl.define do
 
     initialize_with { attributes }
   end
+
+  factory :collected_data, class: Hash do
+
+    initialize_with { attributes }
+  end
+
+  factory :cheapest_option, class: Hash do
+
+    initialize_with { attributes }
+  end
 end

@@ -8,6 +8,7 @@ module HubHop
     end
 
     def start_search(form_data)
+      redis.set "#{request_id}:completed", "false"
       redis.set "#{request_id}:request", { request_data: form_data }.to_json
       Search.perform_async request_id
       request_id

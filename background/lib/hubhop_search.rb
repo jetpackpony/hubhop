@@ -9,35 +9,34 @@ end
 module HubHop
   class Search
     include Sidekiq::Worker
-    attr_reader :input
+    attr_reader :input, :redis
 
     def perform(request_id)
+      @redis = Redis.new(db: ENV['REDIS_DB_NUMBER'])
       @req_id = request_id
       @input = {}
-      puts "test from #{@req_id}"
-      #setup
-      #process
-      #complete
+      setup
+      process
+      complete
     end
 
-    private
-
     def setup
-      HubHop.redis.set "#{@req_id}:completed", "false"
-      data = HubHop.redis.get("#{@req_id}:request")
+      data = redis.get("#{@req_id}:request")
       begin
-        @input = JSON.parse(data, symbolize_names: true)
+        @input = JSON.parse(data, symbolize_names: true)[:request_data]
       rescue Exception => msg
         raise "Failed to parse the request data in the DB\nMessage: " + msg.message
       end
     end
 
     def process
+      flight_data = HubHop::Collector.new(@input).collect
+      @cheapest = HubHop::Analyser.new(flight_data).get_cheapest
     end
 
     def complete
-      HubHop.redis.set "#{@req_id}:completed", "true"
-      HubHop.redis.set "#{@req_id}:results", { results: true }.to_json
+      redis.set "#{@req_id}:completed", "true"
+      redis.set "#{@req_id}:results", { cheapest_option: @cheapest }.to_json
     end
   end
 end

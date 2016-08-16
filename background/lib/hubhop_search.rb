@@ -1,19 +1,26 @@
+require 'dotenv'
 require 'sidekiq'
+Dotenv.load
+
+Sidekiq.configure_client do |config|
+  config.redis = { db: 1 }
+end
 
 module HubHop
-  class Request
+  class Search
+    include Sidekiq::Worker
     attr_reader :input
 
-    def initialize(request_id)
+    def perform(request_id)
       @req_id = request_id
       @input = {}
+      puts "test from #{@req_id}"
+      #setup
+      #process
+      #complete
     end
 
-    def run
-      setup
-      process
-      complete
-    end
+    private
 
     def setup
       HubHop.redis.set "#{@req_id}:completed", "false"
@@ -30,7 +37,7 @@ module HubHop
 
     def complete
       HubHop.redis.set "#{@req_id}:completed", "true"
-      #HubHop.redis.set "#{id}:results", { results: true }.to_json
+      HubHop.redis.set "#{@req_id}:results", { results: true }.to_json
     end
   end
 end

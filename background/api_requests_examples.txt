@@ -1,0 +1,5 @@
+POST http://partners.api.skyscanner.net/apiservices/pricing/v1.0
+apiKey=&country=RU&currency=RUB&locale=ru-RU&originplace=LED-Iata&destinationplace=DME-Iata&outbounddate=2016-09-01
+If status is OK, returns the session link in a Location header
+
+GET http://partners.api.skyscanner.net/apiservices/pricing/uk2/v1.0/_____?apiKey=&stops=0

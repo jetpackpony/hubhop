@@ -15,32 +15,56 @@ describe HubHop::Collector do
 
 
   describe "#collect" do
-    it "creates a search session for every leg of the trip" do
+    before do
+      allow(collector).to receive(:wait_a_bit)
+      allow(HubHop::SkyScannerAPI).
+        to receive(:create_session) do |from, to, date|
+          [from, to, date.gsub("-", "_")].
+            map(&:downcase).
+            join("_")
+        end
+      allow(HubHop::SkyScannerAPI).
+        to receive(:poll_session) do |session_id|
+          value = polled_data[session_id.to_sym]
+          value.is_a?(Array) ? value : []
+        end
+    end
+
+    it "calls SkyScanner API for each leg to create a session" do
       collector.collect
+
       expect(HubHop::SkyScannerAPI).
         to have_received(:create_session).
         exactly(32).times
-      expect(HubHop::SkyScannerAPI).
-        to have_received(:create_session).
-        with("LED", "BAR", "2016-09-01")
-      expect(HubHop::SkyScannerAPI).
-        to have_received(:create_session).
-        with("LED", "LIS", "2016-09-02")
-      expect(HubHop::SkyScannerAPI).
-        to have_received(:create_session).
-        with("DME", "BAR", "2016-09-02")
-      expect(HubHop::SkyScannerAPI).
-        to have_received(:create_session).
-        with("DME", "POR", "2016-09-01")
-      expect(HubHop::SkyScannerAPI).
-        to have_received(:create_session).
-        with("BAR", "POR", "2016-09-04")
+
+      test_legs.each do |leg|
+        expect(HubHop::SkyScannerAPI).
+          to have_received(:create_session).
+          with(leg[:from], leg[:to], leg[:date])
+      end
     end
-    it "creates a worker to poll each of the sessions"
-    it "waits for all the workers to finish"
-    it "returns the composed result of the api requests" do
-      skip
-      expect(collector.collect[:flights].count).to eq collected_data[:flights].count
+
+    it "calls SkyScanner API to poll each session" do
+      collector.collect
+
+      expect(HubHop::SkyScannerAPI).
+        to have_received(:poll_session).
+        exactly(32).times
+
+      test_legs.each do |leg|
+        expect(HubHop::SkyScannerAPI).
+          to have_received(:poll_session).
+          with(
+            HubHop::SkyScannerAPI.
+              create_session leg[:from], leg[:to], leg[:date]
+          )
+      end
+    end
+
+    it "returns the composed result of all the session polls" do
+      collected_data.each do |expected_flight|
+        expect(collector.collect).to include expected_flight
+      end
     end
   end
 end

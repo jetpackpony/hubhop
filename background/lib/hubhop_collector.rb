@@ -4,9 +4,18 @@ module HubHop
 
     def initialize(input)
       @input = input
+      @legs = []
     end
 
     def collect
+      start_all_legs
+
+      @legs.each(&:join).inject([]) do |res, thread|
+        res.concat thread.value
+      end
+    end
+
+    def start_all_legs
       # Create direct legs
       @input[:from_place].each do |from|
         @input[:to_place].each do |to|
@@ -47,7 +56,19 @@ module HubHop
     end
 
     def create_leg(from, to, date)
-      SkyScannerAPI.create_session from, to, date
+      @legs << Thread.new do
+        session_id = SkyScannerAPI.create_session from, to, date
+        res = false
+        while !res do
+          wait_a_bit
+          res = SkyScannerAPI.poll_session session_id
+        end
+        res
+      end
+    end
+
+    def wait_a_bit
+      sleep 10
     end
   end
 end

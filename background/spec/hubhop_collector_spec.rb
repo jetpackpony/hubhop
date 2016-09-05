@@ -1,12 +1,18 @@
+require_relative 'test_data/flights'
 require_relative '../lib/hubhop'
 
 describe HubHop::Collector do
-  let(:form_data) { FactoryGirl.build :form_data }
-  let(:collected_data) { FactoryGirl.build :collected_data }
-  let(:collector) { HubHop::Collector.new form_data }
-  before do
-    allow(HubHop::SkyScannerAPI).to receive(:create_session)
+  let(:collector_input) { HubHopTestData.collector_input }
+  let(:polled_data) { HubHopTestData.polled_data }
+  let(:collected_data) do
+    HubHopTestData.polled_data.
+      inject([]) do |res, flights|
+        res.concat flights[1]
+      end
   end
+  let(:test_legs) { HubHopTestData.test_legs }
+  let(:collector) { HubHop::Collector.new collector_input }
+
 
   describe "#collect" do
     it "creates a search session for every leg of the trip" do

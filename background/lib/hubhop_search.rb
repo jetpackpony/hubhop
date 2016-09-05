@@ -1,7 +1,3 @@
-require 'dotenv'
-require 'sidekiq'
-Dotenv.load
-
 Sidekiq.configure_client do |config|
   config.redis = { db: 1 }
 end
@@ -9,10 +5,9 @@ end
 module HubHop
   class Search
     include Sidekiq::Worker
-    attr_reader :redis
+    include HubHop::RedisConnect
 
     def perform(request_id)
-      @redis = Redis.new(db: ENV['REDIS_DB_NUMBER'])
       @req_id = request_id
       setup
       process
@@ -25,6 +20,7 @@ module HubHop
       data = redis.get("#{@req_id}:request")
       begin
         @input = JSON.parse(data, symbolize_names: true)[:request_data]
+        @input['request_id'] = @req_id
       rescue Exception => msg
         raise "Failed to parse the request data in the DB\nMessage: " + msg.message
       end

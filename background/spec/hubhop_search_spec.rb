@@ -1,14 +1,20 @@
+require_relative 'test_data/flights'
 require_relative "../lib/hubhop"
 
 describe HubHop::Search do
-  let(:form_data) { FactoryGirl.build :form_data }
-  let(:collected_data) { FactoryGirl.build :collected_data }
-  let(:cheapest_option) { FactoryGirl.build :cheapest_option }
+  include HubHop::RedisConnect
+
+  let(:form_data) { HubHopTestData.form_data }
+  let(:collected_data) do
+    HubHopTestData.polled_data.
+      inject([]) { |result, flight| result.concat flight }
+  end
+  let(:cheapest_option) { HubHopTestData.cheapest_option }
   let(:request_id) { "testme" }
 
   describe "#perform" do
     before do
-      Redis.new.set "#{request_id}:request", { request_data: form_data }.to_json
+      redis.set "#{request_id}:request", { request_data: form_data }.to_json
       collector = instance_double(HubHop::Collector)
       allow(collector).to receive(:collect) { collected_data }
       allow(HubHop::Collector).to receive(:new) { collector }
@@ -31,12 +37,11 @@ describe HubHop::Search do
         once
     end
     it "writes the results to the database" do
-      expect(Redis.new.get "#{request_id}:results").
+      expect(redis.get "#{request_id}:results").
         to eq({ cheapest_option: cheapest_option }.to_json)
     end
     it "marks the request in the database as completed" do
-      expect(Redis.new.get "#{request_id}:completed").to eq true.to_json
-
+      expect(redis.get "#{request_id}:completed").to eq true.to_json
     end
   end
 end

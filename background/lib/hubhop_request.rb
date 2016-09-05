@@ -1,9 +1,9 @@
 module HubHop
   class Request
-    attr_reader :redis, :request_id
+    include HubHop::RedisConnect
+    attr_reader :request_id
 
     def initialize(request_id = nil)
-      @redis = Redis.new(db: ENV['REDIS_DB_NUMBER'])
       @request_id = request_id || ('a'..'z').to_a.shuffle[0,8].join
     end
 

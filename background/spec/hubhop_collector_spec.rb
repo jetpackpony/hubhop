@@ -13,7 +13,6 @@ describe HubHop::Collector do
   let(:test_legs) { HubHopTestData.test_legs }
   let(:collector) { HubHop::Collector.new collector_input }
 
-
   describe "#collect" do
     before do
       allow(collector).to receive(:wait_a_bit)

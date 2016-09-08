@@ -1,4 +1,5 @@
 require 'support/factory_girl'
+require 'support/api_stubs'
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 

@@ -5,10 +5,7 @@ describe HubHop::Search do
   include HubHop::RedisConnect
 
   let(:form_data) { HubHopTestData.form_data }
-  let(:collected_data) do
-    HubHopTestData.polled_data.
-      inject([]) { |result, flight| result.concat flight }
-  end
+  let(:collected_data) { HubHopTestData.collected_data }
   let(:cheapest_option) { HubHopTestData.cheapest_option }
   let(:request_id) { "testme" }
 

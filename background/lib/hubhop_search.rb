@@ -1,3 +1,5 @@
+require 'pry'
+
 Sidekiq.configure_client do |config|
   config.redis = { db: 1 }
 end

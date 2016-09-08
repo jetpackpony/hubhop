@@ -15,6 +15,8 @@ module HubHop
       end
     end
 
+    private
+
     def start_all_legs
       # Create direct legs
       @input[:from_place].each do |from|
@@ -57,13 +59,7 @@ module HubHop
 
     def create_leg(from, to, date)
       @legs << Thread.new do
-        session_id = SkyScannerAPI.create_session from, to, date
-        res = false
-        while !res do
-          wait_a_bit
-          res = SkyScannerAPI.poll_session session_id
-        end
-        res
+        SkyScannerAPI.get_cached_quote from, to, date
       end
     end
 

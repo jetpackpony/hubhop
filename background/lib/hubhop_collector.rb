@@ -59,12 +59,21 @@ module HubHop
 
     def create_leg(from, to, date)
       @legs << Thread.new do
-        SkyScannerAPI.get_cached_quote from, to, date
+        session_url = SkyScannerAPI.create_session from, to, date
+        res = false
+        i = 0
+        while !res && i < 10 do
+          wait_a_bit
+          res = SkyScannerAPI.poll_session session_url
+          i += 1
+        end
+        return nil if !res
+        [res.sort { |a, b| a[:price] <=> b[:price] }.first]
       end
     end
 
     def wait_a_bit
-      sleep 10
+      sleep rand(20)
     end
   end
 end

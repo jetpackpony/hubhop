@@ -3,7 +3,6 @@ require_relative '../lib/hubhop'
 
 describe HubHop::Collector do
   let(:collector_input) { HubHopTestData.collector_input }
-  let(:collected_data) { HubHopTestData.collected_data }
   let(:test_legs) { HubHopTestData.test_legs }
   let(:collector) { HubHop::Collector.new collector_input }
 
@@ -11,29 +10,50 @@ describe HubHop::Collector do
     before do
       allow(collector).to receive(:wait_a_bit)
       allow(HubHop::SkyScannerAPI).
-        to receive(:get_cached_quote) do |from, to, date|
-          HubHopTestData.get_leg_for from, to, date
+        to receive(:create_session) do |from, to, date|
+          "#{from}_#{to}_#{date}"
+        end
+      allow(HubHop::SkyScannerAPI).
+        to receive(:poll_session) do |session_url|
+          HubHopTestData.live_price_result(
+            *session_url.split("_")
+          )
         end
     end
 
-    it "calls SkyScanner API for each leg to get a chached quote" do
+    it "creates a SkyScannerAPI session for each leg" do
       collector.collect
 
       expect(HubHop::SkyScannerAPI).
-        to have_received(:get_cached_quote).
+        to have_received(:create_session).
         exactly(32).times
 
       test_legs.each do |leg|
         expect(HubHop::SkyScannerAPI).
-          to have_received(:get_cached_quote).
+          to have_received(:create_session).
           with(leg[:from], leg[:to], leg[:date])
       end
     end
 
+    it "polls the SkyScannerAPI session for leg results" do
+      collector.collect
+
+      expect(HubHop::SkyScannerAPI).
+        to have_received(:poll_session).
+        exactly(32).times
+    end
+
     it "returns the composed result of all the session polls" do
-      collected_data.each do |expected_flight|
-        expect(collector.collect).to include expected_flight
+      coll = collector.collect
+      expect(coll).to be_a Array
+      expect(coll.count).to eq 32
+      # This creates a live price hash out of from, to and date
+      coll.each do |f|
+        expect(f).to eq HubHopTestData.live_price(
+          f[:from][:code], f[:to][:code], f[:departure].strftime("%Y-%m-%d"))
       end
     end
+
+    it "calls no more than 100 requests per minute"
   end
 end

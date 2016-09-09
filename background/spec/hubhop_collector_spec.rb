@@ -46,14 +46,16 @@ describe HubHop::Collector do
     it "returns the composed result of all the session polls" do
       coll = collector.collect
       expect(coll).to be_a Array
-      expect(coll.count).to eq 32
-      # This creates a live price hash out of from, to and date
-      coll.each do |f|
-        expect(f).to eq HubHopTestData.live_price(
-          f[:from][:code], f[:to][:code], f[:departure].strftime("%Y-%m-%d"))
+      expect(coll.count).to eq 64
+      test_legs.each do |leg|
+        leg_prices = HubHopTestData.live_price_result(
+          leg[:from], leg[:to], leg[:date])
+        expect(coll).to include leg_prices[0]
+        expect(coll).to include leg_prices[1]
       end
     end
 
+    it "does something if the leg didn't return any results"
     it "calls no more than 100 requests per minute"
   end
 end

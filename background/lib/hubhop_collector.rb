@@ -11,7 +11,7 @@ module HubHop
       start_all_legs
 
       @legs.each(&:join).inject([]) do |res, thread|
-        res.concat thread.value
+        res.concat thread[:output]
       end
     end
 
@@ -60,20 +60,28 @@ module HubHop
     def create_leg(from, to, date)
       @legs << Thread.new do
         session_url = SkyScannerAPI.create_session from, to, date
+        leg_id = "#{from}, #{to}, #{date}: #{session_url}"
         res = false
         i = 0
-        while !res && i < 10 do
-          wait_a_bit
+        wait_a_bit 3
+        start_time = Time.now
+        while !res && (Time.now - start_time < 200 || i < 10) do
           res = SkyScannerAPI.poll_session session_url
+          wait_a_bit i
           i += 1
         end
-        return nil if !res
-        [res.sort { |a, b| a[:price] <=> b[:price] }.first]
+        if !res
+          Thread.current[:output] = [leg_id] 
+        elsif res.count == 0
+          Thread.current[:output] = ["Zero results for: #{leg_id}"] 
+        else
+          Thread.current[:output] = res
+        end
       end
     end
 
-    def wait_a_bit
-      sleep rand(20)
+    def wait_a_bit(i)
+      sleep rand(10) + i*3
     end
   end
 end

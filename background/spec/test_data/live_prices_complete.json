@@ -1,0 +1,793 @@
+{
+  "SessionKey": "7a235e8b5d264eaba52947fbce61ae58_ecilpojl_026BA070E4D7ADF4C0E2BA1F658F666B",
+  "Query": {
+    "Country": "RU",
+    "Currency": "RUB",
+    "Locale": "ru-ru",
+    "Adults": 1,
+    "Children": 0,
+    "Infants": 0,
+    "OriginPlace": "6171",
+    "DestinationPlace": "5363",
+    "OutboundDate": "2016-12-02",
+    "LocationSchema": "Default",
+    "CabinClass": "Economy",
+    "GroupPricing": false
+  },
+  "Status": "UpdatesComplete",
+  "Itineraries": [
+    {
+      "OutboundLegId": "13489-1612021030-SU-0-14385-1612021120",
+      "PricingOptions": [
+        {
+          "Agents": [
+            2615155
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3526638
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3072121
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3929780
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            4061317
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3513058
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            2499060
+          ],
+          "QuoteAgeInMinutes": 1,
+          "Price": 7395.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            4045189
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7476.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3960257
+          ],
+          "QuoteAgeInMinutes": 1,
+          "Price": 7531.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            1943123
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7745.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            2074840
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 7893.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        }
+      ],
+      "BookingDetailsLink": {
+        "Uri": "/apiservices/pricing/v1.0/7a235e8b5d264eaba52947fbce61ae58_ecilpojl_026BA070E4D7ADF4C0E2BA1F658F666B/booking",
+        "Body": "OutboundLegId=13489-1612021030-SU-0-14385-1612021120&InboundLegId=",
+        "Method": "PUT"
+      }
+    },
+    {
+      "OutboundLegId": "13489-1612021725-LH-0-14385-1612021820",
+      "PricingOptions": [
+        {
+          "Agents": [
+            3182916
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 16074.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3957637
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 16674.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            1929340
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 16936.1,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3957531
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17029.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3072121
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17059.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3929780
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17164.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3526638
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17166.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            4045189
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17507.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3513058
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17623.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            4061317
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17641.92,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            3960257
+          ],
+          "QuoteAgeInMinutes": 1,
+          "Price": 17790.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        },
+        {
+          "Agents": [
+            2074840
+          ],
+          "QuoteAgeInMinutes": 45,
+          "Price": 17984.0,
+          "DeeplinkUrl": "http://skyscanner.net/deeplink"
+        }
+      ],
+      "BookingDetailsLink": {
+        "Uri": "/apiservices/pricing/v1.0/7a235e8b5d264eaba52947fbce61ae58_ecilpojl_026BA070E4D7ADF4C0E2BA1F658F666B/booking",
+        "Body": "OutboundLegId=13489-1612021725-LH-0-14385-1612021820&InboundLegId=",
+        "Method": "PUT"
+      }
+    }
+  ],
+  "Legs": [
+    {
+      "Id": "13489-1612021030-SU-0-14385-1612021120",
+      "SegmentIds": [
+        1
+      ],
+      "OriginStation": 13489,
+      "DestinationStation": 14385,
+      "Departure": "2016-12-02T10:30:00",
+      "Arrival": "2016-12-02T11:20:00",
+      "Duration": 170,
+      "JourneyMode": "Flight",
+      "Stops": [
+
+      ],
+      "Carriers": [
+        1717
+      ],
+      "OperatingCarriers": [
+        1094
+      ],
+      "Directionality": "Outbound",
+      "FlightNumbers": [
+        {
+          "FlightNumber": "6657",
+          "CarrierId": 1717
+        }
+      ]
+    },
+    {
+      "Id": "13489-1612021725-LH-0-14385-1612021820",
+      "SegmentIds": [
+        2
+      ],
+      "OriginStation": 13489,
+      "DestinationStation": 14385,
+      "Departure": "2016-12-02T17:25:00",
+      "Arrival": "2016-12-02T18:20:00",
+      "Duration": 175,
+      "JourneyMode": "Flight",
+      "Stops": [
+
+      ],
+      "Carriers": [
+        1368
+      ],
+      "OperatingCarriers": [
+        1368
+      ],
+      "Directionality": "Outbound",
+      "FlightNumbers": [
+        {
+          "FlightNumber": "2565",
+          "CarrierId": 1368
+        }
+      ]
+    }
+  ],
+  "Segments": [
+    {
+      "Id": 1,
+      "OriginStation": 13489,
+      "DestinationStation": 14385,
+      "DepartureDateTime": "2016-12-02T10:30:00",
+      "ArrivalDateTime": "2016-12-02T11:20:00",
+      "Carrier": 1717,
+      "OperatingCarrier": 1094,
+      "Duration": 170,
+      "FlightNumber": "6657",
+      "JourneyMode": "Flight",
+      "Directionality": "Outbound"
+    },
+    {
+      "Id": 2,
+      "OriginStation": 13489,
+      "DestinationStation": 14385,
+      "DepartureDateTime": "2016-12-02T17:25:00",
+      "ArrivalDateTime": "2016-12-02T18:20:00",
+      "Carrier": 1368,
+      "OperatingCarrier": 1368,
+      "Duration": 175,
+      "FlightNumber": "2565",
+      "JourneyMode": "Flight",
+      "Directionality": "Outbound"
+    }
+  ],
+  "Carriers": [
+    {
+      "Id": 1717,
+      "Code": "SU",
+      "Name": "Aeroflot",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/SU.png",
+      "DisplayCode": "SU"
+    },
+    {
+      "Id": 1094,
+      "Code": "FV",
+      "Name": "Rossiya Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/FV.png",
+      "DisplayCode": "FV"
+    },
+    {
+      "Id": 1368,
+      "Code": "LH",
+      "Name": "Lufthansa",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/LH.png",
+      "DisplayCode": "LH"
+    },
+    {
+      "Id": 1687,
+      "Code": "S7",
+      "Name": "S7 Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/S7.png",
+      "DisplayCode": "S7"
+    },
+    {
+      "Id": 900,
+      "Code": "BT",
+      "Name": "airBaltic",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/BT.png",
+      "DisplayCode": "BT"
+    },
+    {
+      "Id": 1375,
+      "Code": "LO",
+      "Name": "LOT",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/LO.png",
+      "DisplayCode": "LO"
+    },
+    {
+      "Id": 1755,
+      "Code": "TK",
+      "Name": "Turkish Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/TK.png",
+      "DisplayCode": "TK"
+    },
+    {
+      "Id": 857,
+      "Code": "AY",
+      "Name": "Finnair",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/AY.png",
+      "DisplayCode": "AY"
+    },
+    {
+      "Id": 881,
+      "Code": "BA",
+      "Name": "British Airways",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/BA.png",
+      "DisplayCode": "BA"
+    },
+    {
+      "Id": 1324,
+      "Code": "KL",
+      "Name": "KLM",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/KL.png",
+      "DisplayCode": "KL"
+    },
+    {
+      "Id": 834,
+      "Code": "AB",
+      "Name": "Air Berlin",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/AB.png",
+      "DisplayCode": "AB"
+    },
+    {
+      "Id": 838,
+      "Code": "AF",
+      "Name": "Air France",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/AF.png",
+      "DisplayCode": "AF"
+    },
+    {
+      "Id": 866,
+      "Code": "B2",
+      "Name": "Belavia",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/B2.png",
+      "DisplayCode": "B2"
+    },
+    {
+      "Id": 858,
+      "Code": "AZ",
+      "Name": "Alitalia",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/AZ.png",
+      "DisplayCode": "AZ"
+    },
+    {
+      "Id": 1384,
+      "Code": "LX",
+      "Name": "Swiss",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/LX.png",
+      "DisplayCode": "LX"
+    },
+    {
+      "Id": 1707,
+      "Code": "SK",
+      "Name": "SAS",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/SK.png",
+      "DisplayCode": "SK"
+    },
+    {
+      "Id": 1523,
+      "Code": "OS",
+      "Name": "Austrian Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/OS.png",
+      "DisplayCode": "OS"
+    },
+    {
+      "Id": 1812,
+      "Code": "UT",
+      "Name": "UTair",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/UT.png",
+      "DisplayCode": "UT"
+    },
+    {
+      "Id": 1074,
+      "Code": "FB",
+      "Name": "Bulgaria Air",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/FB.png",
+      "DisplayCode": "FB"
+    },
+    {
+      "Id": 819,
+      "Code": "A3",
+      "Name": "Aegean Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/A3.png",
+      "DisplayCode": "A3"
+    },
+    {
+      "Id": 1218,
+      "Code": "IB",
+      "Name": "Iberia",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/IB.png",
+      "DisplayCode": "IB"
+    },
+    {
+      "Id": 1658,
+      "Code": "RJ",
+      "Name": "Royal Jordanian",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/RJ.png",
+      "DisplayCode": "RJ"
+    },
+    {
+      "Id": 1385,
+      "Code": "LY",
+      "Name": "EL AL Israel Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/LY.png",
+      "DisplayCode": "LY"
+    },
+    {
+      "Id": 1186,
+      "Code": "HR",
+      "Name": "Hahn Air",
+      "ImageUrl": "http://s1.apideeplink.com/images/airlines/HR.png",
+      "DisplayCode": "HR"
+    }
+  ],
+  "Agents": [
+    {
+      "Id": 2615155,
+      "Name": "Go2See",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/go2c.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3526638,
+      "Name": "ozon.travel",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/ozon.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "BookingNumber": "+74957872888",
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3072121,
+      "Name": "Kupibilet",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/kubi.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3929780,
+      "Name": "Sindbad",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/sind.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 4061317,
+      "Name": "Trip.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/trru.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3513058,
+      "Name": "OneTwoTrip",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/ottr.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2499060,
+      "Name": "Aeroflot",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/flot.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "88003335555",
+      "Type": "Airline"
+    },
+    {
+      "Id": 4045189,
+      "Name": "Tickets.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/tkru.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3960257,
+      "Name": "Svyaznoy Travel",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/svya.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 1943123,
+      "Name": "Aviakassa",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/akas.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74959701717",
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2074840,
+      "Name": "Biletix.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/btix.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "0074956268890",
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3182916,
+      "Name": "Lufthansa",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/luft.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74959809999",
+      "Type": "Airline"
+    },
+    {
+      "Id": 3957637,
+      "Name": "Supersaver.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/suru.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 1929340,
+      "Name": "AeroBilet",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/aebl.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3957531,
+      "Name": "SuperKassa",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/supk.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3952406,
+      "Name": "S7 Airlines",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/ssev.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "BookingNumber": "+74957779999",
+      "Type": "Airline"
+    },
+    {
+      "Id": 2049254,
+      "Name": "Biletdv.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/bidv.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "BookingNumber": "74212300100",
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 3612079,
+      "Name": "Pososhok.ru",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/poso.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2160610,
+      "Name": "City.Travel",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/citr.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2492094,
+      "Name": "finnair",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/finn.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74959330056",
+      "Type": "Airline"
+    },
+    {
+      "Id": 4035973,
+      "Name": "Travelgenio",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/tgru.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2252770,
+      "Name": "Datravel",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/datr.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "Type": "TravelAgent"
+    },
+    {
+      "Id": 2031204,
+      "Name": "airBaltic",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/balt.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "BookingNumber": "90001100",
+      "Type": "Airline"
+    },
+    {
+      "Id": 1939318,
+      "Name": "Air France",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/airf.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74959373839",
+      "Type": "Airline"
+    },
+    {
+      "Id": 1945812,
+      "Name": "Alitalia",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/alit.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "0039062222",
+      "Type": "Airline"
+    },
+    {
+      "Id": 3051889,
+      "Name": "KLM",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/klm1.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74952583600",
+      "Type": "Airline"
+    },
+    {
+      "Id": 3911585,
+      "Name": "SAS",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/sasa.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": false,
+      "BookingNumber": "+74959613060",
+      "Type": "Airline"
+    },
+    {
+      "Id": 3961811,
+      "Name": "Swiss",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/swis.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74959377767",
+      "Type": "Airline"
+    },
+    {
+      "Id": 2032127,
+      "Name": "British Airways",
+      "ImageUrl": "http://s1.apideeplink.com/images/websites/ba__.png",
+      "Status": "UpdatesComplete",
+      "OptimisedForMobile": true,
+      "BookingNumber": "+74953632525",
+      "Type": "Airline"
+    }
+  ],
+  "Places": [
+    {
+      "Id": 13489,
+      "ParentId": 6171,
+      "Code": "LED",
+      "Type": "Airport",
+      "Name": "Санкт-Петербург Пулково"
+    },
+    {
+      "Id": 14385,
+      "ParentId": 5363,
+      "Code": "MUC",
+      "Type": "Airport",
+      "Name": "Мюнхен"
+    },
+    {
+      "Id": 6171,
+      "ParentId": 191,
+      "Code": "LED",
+      "Type": "City",
+      "Name": "Санкт-Петербург"
+    },
+    {
+      "Id": 5363,
+      "ParentId": 252,
+      "Code": "MUC",
+      "Type": "City",
+      "Name": "Мюнхен"
+    },
+    {
+      "Id": 191,
+      "Code": "RU",
+      "Type": "Country",
+      "Name": "Россия"
+    },
+    {
+      "Id": 252,
+      "Code": "DE",
+      "Type": "Country",
+      "Name": "Германия"
+    }
+  ],
+  "Currencies": [
+    {
+      "Code": "RUB",
+      "Symbol": "p.",
+      "ThousandsSeparator": " ",
+      "DecimalSeparator": ",",
+      "SymbolOnLeft": false,
+      "SpaceBetweenAmountAndSymbol": true,
+      "RoundingCoefficient": 0,
+      "DecimalDigits": 2
+    },
+    {
+      "Code": "EUR",
+      "Symbol": "€",
+      "ThousandsSeparator": ".",
+      "DecimalSeparator": ",",
+      "SymbolOnLeft": false,
+      "SpaceBetweenAmountAndSymbol": true,
+      "RoundingCoefficient": 0,
+      "DecimalDigits": 2
+    }
+  ]
+}

@@ -11,57 +11,13 @@ module HubHopTestData
     ]
   end
 
+  def self.live_price(from, to, date)
+    HubHopTestData.live_price_result(from, to, date).
+      sort { |a, b| a[:price] <=> b[:price] }.
+      first
+  end
+
   def self.collected_data
-    [
-      { from: "LED", to: "BCN",
-        date: Date.parse("2016-12-01"),
-        price: "3000"},
-      { from: "LED", to: "MUC",
-        date: Date.parse("2016-12-02"),
-        price: "6000"},
-      { from: "DME", to: "BCN",
-        date: Date.parse("2016-12-01"),
-        price: "3500"},
-      { from: "DME", to: "MUC",
-        date: Date.parse("2016-12-01"),
-        price: "8000"},
-      { from: "MUC", to: "LIS",
-        date: Date.parse("2016-12-01"),
-        price: "2000"},
-      { from: "MUC", to: "OPO",
-        date: Date.parse("2016-12-01"),
-        price: "2500"},
-      { from: "MUC", to: "OPO",
-        date: Date.parse("2016-12-02"),
-        price: "6000"},
-      { from: "MUC", to: "LIS",
-        date: Date.parse("2016-12-02"),
-        price: "6000"},
-      { from: "BCN", to: "LIS",
-        date: Date.parse("2016-12-01"),
-        price: "3500"},
-      { from: "BCN", to: "OPO",
-        date: Date.parse("2016-12-01"),
-        price: "8000"},
-      { from: "BCN", to: "LIS",
-        date: Date.parse("2016-12-02"),
-        price: "7000"},
-      { from: "LED", to: "LIS",
-        date: Date.parse("2016-12-01"),
-        price: "3000"},
-      { from: "LED", to: "OPO",
-        date: Date.parse("2016-12-01"),
-        price: "4500"},
-      { from: "DME", to: "LIS",
-        date: Date.parse("2016-12-02"),
-        price: "6000"},
-      { from: "DME", to: "OPO",
-        date: Date.parse("2016-12-01"),
-        price: "3500"},
-      { from: "LED", to: "LIS",
-        date: Date.parse("2016-12-02"),
-        price: "8000"},
-    ]
   end
 
   def self.cheapest_option
@@ -96,8 +52,47 @@ module HubHopTestData
   end
 
   def self.complete_session
-    {}
+    live_price_result("LED", "MUC", "2016-12-02")
   end
 
+  def self.live_price_result(from, to, date)
+    [
+      {
+        from: {
+          code: from
+        },
+        to: {
+          code: to
+        },
+        departure: DateTime.parse("#{date}T10:30:00+00:00"),
+        arrival: DateTime.parse("#{date}T11:20:00+00:00"),
+        price: 7395.0,
+        deeplink: "http://skyscanner.net/deeplink",
+        carrier: {
+          name: "Aeroflot"
+        },
+        agent: {
+          name: "Go2See"
+        }
+      },
+      {
+        from: {
+          code: from
+        },
+        to: {
+          code: to
+        },
+        departure: DateTime.parse("#{date}T17:25:00+00:00"),
+        arrival: DateTime.parse("#{date}T18:20:00+00:00"),
+        price: 16074.0,
+        deeplink: "http://skyscanner.net/deeplink",
+        carrier: {
+          name: "Lufthansa"
+        },
+        agent: {
+          name: "Lufthansa"
+        }
+      }
+    ]
+  end
 end
-

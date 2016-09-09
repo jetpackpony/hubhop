@@ -57,9 +57,9 @@ describe HubHop::SkyScannerAPI do
         expect(poll_session).to be false
       end
       it "returns an array of flights if the session is complete" do
-        skip
         stub_poll_session_complete
-        expect(poll_session).to eq HubHopTestData.complete_session
+        expect(poll_session[0]).to eq HubHopTestData.complete_session[0]
+        expect(poll_session[1]).to eq HubHopTestData.complete_session[1]
       end
     end
     context "(with response unsuccessful)" do

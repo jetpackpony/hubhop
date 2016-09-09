@@ -18,7 +18,7 @@ module HubHop
 
     def self.poll_session(session_url)
       api_response = JSON.parse(live_prices_results session_url)
-      return false if session_complete? api_response
+      return false if !session_complete?(api_response)
       distill_session api_response
     end
 
@@ -36,22 +36,61 @@ module HubHop
     private
 
     def self.session_complete?(api_response)
-      api_response["Flights"]["Status"] == "UpdatesPending"
+      api_response["Status"] == "UpdatesComplete"
     end
 
-    def self.distill_session(api_response)
+    def self.distill_session(data)
       res = []
-      api_response["Flights"]["Itineraries"].each do |leg|
+      data["Itineraries"].each do |leg|
         tmp = {}
         price = leg["PricingOptions"].
           sort { |a,b| a["Price"] <=> b["Price"]}.
           first
         tmp[:price] = price["Price"]
         tmp[:deeplink] = price["DeeplinkUrl"]
+        tmp[:agent] = {
+          name: get_agent(price["Agents"][0], data)["Name"]
+        }
+        tmp[:from] = {
+          code: get_place(
+            get_leg(leg["OutboundLegId"], data)["OriginStation"], data
+          )["Code"]
+        }
+        tmp[:to] = {
+          code: get_place(
+            get_leg(leg["OutboundLegId"], data)["DestinationStation"], data
+          )["Code"]
+        }
+        tmp[:carrier] = {
+          name: get_carrier(
+            get_leg(leg["OutboundLegId"], data)["Carriers"][0], data
+          )["Name"]
+        }
+        tmp[:departure] = DateTime.parse(
+          get_leg(leg["OutboundLegId"], data)["Departure"])
+        tmp[:arrival] = DateTime.parse(
+          get_leg(leg["OutboundLegId"], data)["Arrival"])
+
         res.push tmp
       end
       res
 
+    end
+
+    def self.get_agent(id, data)
+      data["Agents"].find { |x| x["Id"] == id }
+    end
+
+    def self.get_place(id, data)
+      data["Places"].find { |x| x["Id"] == id }
+    end
+
+    def self.get_leg(id, data)
+      data["Legs"].find { |x| x["Id"] == id }
+    end
+
+    def self.get_carrier(id, data)
+      data["Carriers"].find { |x| x["Id"] == id }
     end
 
     def self.log(str)
@@ -141,6 +180,10 @@ module HubHop
     def self.live_prices_results(session_url)
       adr = "" + session_url
       adr << "?apiKey=#{ENV['API_KEY']}"
+      adr << "&stops=0"
+
+      #adr << "&pageindex=0"
+      #adr << "&pagesize=3"
 
       i = 0
       while i < 5 do

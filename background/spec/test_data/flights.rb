@@ -1,5 +1,6 @@
 require_relative "./inputs"
 require_relative "./api_calls"
+require_relative "./collected_data"
 
 module HubHopTestData
   def self.test_legs
@@ -15,12 +16,6 @@ module HubHopTestData
     HubHopTestData.live_price_result(from, to, date).
       sort { |a, b| a[:price] <=> b[:price] }.
       first
-  end
-
-  def self.collected_data
-  end
-
-  def self.cheapest_option
   end
 
   def self.cached_quote_zero_results

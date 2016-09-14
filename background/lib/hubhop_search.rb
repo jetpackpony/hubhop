@@ -30,7 +30,10 @@ module HubHop
 
     def process
       flight_data = HubHop::Collector.new(@input).collect
-      @cheapest = HubHop::Analyser.new(flight_data).get_cheapest
+      redis.set "#{@req_id}:collected_flights", flight_data.to_json
+      @cheapest = HubHop::Analyser.
+                    new(@input, flight_data).
+                    cheapest
     end
 
     def complete

@@ -17,7 +17,7 @@ describe HubHop::Search do
       allow(HubHop::Collector).to receive(:new) { collector }
 
       analyser = instance_double(HubHop::Analyser)
-      allow(analyser).to receive(:get_cheapest) { cheapest_option }
+      allow(analyser).to receive(:cheapest) { cheapest_option }
       allow(HubHop::Analyser).to receive(:new) { analyser }
 
       HubHop::Search.new.perform request_id
@@ -28,9 +28,13 @@ describe HubHop::Search do
         to have_received(:collect).
         once
     end
+    it "records the inforamtion about flights in the DB" do
+      expect(redis.get "#{request_id}:collected_flights").
+        to eq(HubHopTestData.collected_data.to_json)
+    end
     it "chooses the cheapest route option" do
-      expect(HubHop::Analyser.new collected_data).
-        to have_received(:get_cheapest).
+      expect(HubHop::Analyser.new form_data, collected_data).
+        to have_received(:cheapest).
         once
     end
     it "writes the results to the database" do

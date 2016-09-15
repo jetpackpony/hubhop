@@ -152,6 +152,9 @@ module HubHop
         legs.push @flights[@edges[[leg[0], leg[1]]][:flight_id]]
       end
       {
+        from: @vertices[route[0]][:place],
+        to: @vertices[route[route.size-1]][:place],
+        via: route.size > 2 ? @vertices[route[1]][:place] : "",
         name: name,
         legs: legs,
         total_price: legs.inject(0) { |sum, leg| sum += leg[:price] }

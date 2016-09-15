@@ -42,6 +42,9 @@ describe HubHop::FlightGraph do
   let(:cheapest_route) do
     {
       name: "DME->LIS",
+      from: "DME",
+      to: "LIS",
+      via: "",
       legs: dme_lis_legs,
       total_price: dme_lis_legs.inject(0) { |sum, x| sum += x[:price] }
     }
@@ -135,6 +138,15 @@ describe HubHop::FlightGraph do
     it "adds the list of flights that are the legs of the route" do
       expect(graph.routes["LED->OPO"][:legs]).to eq led_opo_legs
       expect(graph.routes["DME->LIS"][:legs]).to eq dme_lis_legs
+    end
+    it "adds from point to the route" do
+      expect(graph.routes["LED->OPO"][:from]).to eq "LED"
+    end
+    it "adds from point to the route" do
+      expect(graph.routes["DME->LIS"][:to]).to eq "LIS"
+    end
+    it "adds via point to the route" do
+      expect(graph.routes["LED->OPO"][:via]).to eq "MUC"
     end
   end
 

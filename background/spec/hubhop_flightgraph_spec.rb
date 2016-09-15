@@ -18,37 +18,9 @@ describe HubHop::FlightGraph do
   let(:bcn_date) { DateTime.parse("2016-12-01T06:45:00+00:00") }
   let(:bcn_date_1) { DateTime.parse("2016-12-02T08:45:00+00:00") }
 
-  let(:led_opo_legs) do
-    [
-      HubHopTestData.collected_data.find do |x|
-        x[:from][:code] == "LED" && x[:to][:code] == "MUC" &&
-          x[:departure] == DateTime.parse("2016-12-02T10:30:00+00:00")
-      end,
-      HubHopTestData.collected_data.find do |x|
-        x[:from][:code] == "MUC" && x[:to][:code] == "OPO" &&
-          x[:departure] == DateTime.parse("2016-12-03T16:25:00+00:00")
-      end
-    ]
-  end
-  let(:dme_lis_legs) do
-    [
-      HubHopTestData.collected_data.find do |x|
-        x[:from][:code] == "DME" && x[:to][:code] == "LIS" &&
-          x[:departure] == DateTime.parse("2016-12-02T05:00:00+00:00") &&
-          x[:carrier][:name] == "TAP Portugal"
-      end
-    ]
-  end
-  let(:cheapest_route) do
-    {
-      name: "DME->LIS",
-      from: "DME",
-      to: "LIS",
-      via: "",
-      legs: dme_lis_legs,
-      total_price: dme_lis_legs.inject(0) { |sum, x| sum += x[:price] }
-    }
-  end
+  let(:led_opo_legs) { HubHopTestData.led_opo_legs }
+  let(:dme_lis_legs) { HubHopTestData.dme_lis_legs }
+  let(:cheapest_route) { HubHopTestData.cheapest_option }
 
   describe "#load_flights" do
     it "creates an edge for each flight in the list" do

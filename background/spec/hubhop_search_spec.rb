@@ -8,6 +8,11 @@ describe HubHop::Search do
   let(:collected_data) { HubHopTestData.collected_data }
   let(:cheapest_option) { HubHopTestData.cheapest_option }
   let(:request_id) { "testme" }
+  let(:create_flihgt_graph) {
+    HubHop::FlightGraph.new(
+      collected_data, form_data[:from_place], form_data[:to_place], form_data[:max_transit_time]    
+    )
+  }
 
   describe "#perform" do
     before do
@@ -16,9 +21,9 @@ describe HubHop::Search do
       allow(collector).to receive(:collect) { collected_data }
       allow(HubHop::Collector).to receive(:new) { collector }
 
-      analyser = instance_double(HubHop::Analyser)
-      allow(analyser).to receive(:cheapest) { cheapest_option }
-      allow(HubHop::Analyser).to receive(:new) { analyser }
+      flight_graph = instance_double(HubHop::FlightGraph)
+      allow(flight_graph).to receive(:cheapest) { cheapest_option }
+      allow(HubHop::FlightGraph).to receive(:new) { flight_graph }
 
       HubHop::Search.new.perform request_id
     end
@@ -33,7 +38,7 @@ describe HubHop::Search do
         to eq(HubHopTestData.collected_data.to_json)
     end
     it "chooses the cheapest route option" do
-      expect(HubHop::Analyser.new form_data, collected_data).
+      expect(create_flihgt_graph).
         to have_received(:cheapest).
         once
     end

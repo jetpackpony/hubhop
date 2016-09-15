@@ -31,9 +31,9 @@ module HubHop
     def process
       flight_data = HubHop::Collector.new(@input).collect
       redis.set "#{@req_id}:collected_flights", flight_data.to_json
-      @cheapest = HubHop::Analyser.
-                    new(@input, flight_data).
-                    cheapest
+      @cheapest = HubHop::FlightGraph.new(
+        flight_data, @input[:from_place], @input[:to_place], @input[:max_transit_time]
+      ).cheapest
     end
 
     def complete

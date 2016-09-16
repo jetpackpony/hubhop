@@ -8,6 +8,7 @@ module HubHop
   class Search
     include Sidekiq::Worker
     include HubHop::RedisConnect
+    sidekiq_options :retry => false
 
     def perform(request_id)
       @req_id = request_id

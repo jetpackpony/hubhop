@@ -1,4 +1,5 @@
 [
+  "Zero results for: LED, LIS, 2016-12-01: http://skys.net",
   {
     "price": 7608.0,
     "deeplink": "http://skyscanner.net/deeplink",
@@ -17,6 +18,7 @@
     "departure": "2016-12-02T05:00:00+00:00",
     "arrival": "2016-12-02T07:55:00+00:00"
   },
+  "Zero results for: LED, OPO, 2016-12-02: http://skys.net",
   {
     "price": 32653.0,
     "deeplink": "http://skyscanner.net/deeplink",
@@ -1979,6 +1981,7 @@
     "departure": "2016-12-03T16:25:00+00:00",
     "arrival": "2016-12-03T18:15:00+00:00"
   },
+  "Zero results for: DME, OPO, 2016-12-02: http://skys.net",
   {
     "price": 23865.0,
     "deeplink": "http://skyscanner.net/deeplink",

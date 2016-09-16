@@ -1,13 +1,6 @@
 module HubHopTestData
   def self.collected_data
-    JSON.parse(
-      IO.read("spec/test_data/collector_result.json"), :symbolize_keys => true
-    ).map(&:deep_symbolize_keys).
-      map do |x|
-        x[:departure] = DateTime.parse(x[:departure])
-        x[:arrival] = DateTime.parse(x[:arrival])
-        x
-      end
+    self.collected_data_unfiltered.select { |x| x.is_a? Hash }
   end
 
   def self.cheapest_option
@@ -42,6 +35,19 @@ module HubHopTestData
           x[:carrier][:name] == "TAP Portugal"
       end
     ]
+  end
+
+  def self.collected_data_unfiltered
+    JSON.parse(
+      IO.read("spec/test_data/collector_result.json"), :symbolize_keys => true
+    ).map { |x| (x.is_a? Hash) ? x.deep_symbolize_keys : x }.
+      map do |x|
+        if x.is_a? Hash
+          x[:departure] = DateTime.parse(x[:departure])
+          x[:arrival] = DateTime.parse(x[:arrival])
+        end
+        x
+      end
   end
 end
 

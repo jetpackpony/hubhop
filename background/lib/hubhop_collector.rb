@@ -59,29 +59,49 @@ module HubHop
 
     def create_leg(from, to, date)
       @legs << Thread.new do
-        session_url = SkyScannerAPI.create_session from, to, date
-        leg_id = "#{from}, #{to}, #{date}: #{session_url}"
+        leg = Leg.new
+        leg.log = LegLog.new from, to, date
+        leg.from = from
+        leg.to = to
+        leg.date = date
+        Thread.current[:output] = leg.query
+      end
+    end
+
+    class Leg
+      attr_accessor :from, :to, :date, :log
+
+      def query
+        session_url = SkyScannerAPI.create_session @from, @to, @date
+        leg_id = "#{@from}, #{@to}, #{@date}: #{session_url}"
         res = false
         i = 0
         wait_a_bit 3
         start_time = Time.now
-        while !res && (Time.now - start_time < 200 || i < 10) do
+        while !res && (!time_passed?(start_time, 200) || i < 10) do
           res = SkyScannerAPI.poll_session session_url
           wait_a_bit i
           i += 1
         end
+
         if !res
-          Thread.current[:output] = [leg_id] 
+          @log.log "Failed to retrieve data"
+          []
         elsif res.count == 0
-          Thread.current[:output] = ["Zero results for: #{leg_id}"] 
+          @log.log "Got zero results for this leg!"
+          []
         else
-          Thread.current[:output] = res
+          res
         end
       end
-    end
 
-    def wait_a_bit(i)
-      sleep rand(10) + i*3
+      def time_passed?(start, diff)
+        Time.now - start > diff
+      end
+
+      def wait_a_bit(i)
+        sleep rand(10) + i*3
+      end
     end
   end
 end

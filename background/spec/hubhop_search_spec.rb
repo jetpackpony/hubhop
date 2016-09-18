@@ -62,7 +62,6 @@ describe HubHop::Search do
       perfrom_search
       expect(redis.get "#{request_id}:completed").to eq true.to_json
     end
-    it "logs the info about the legs with zero results"
     it "creates the flight graph with zero results filtered out" do
       perfrom_search
       expect(HubHop::FlightGraph).

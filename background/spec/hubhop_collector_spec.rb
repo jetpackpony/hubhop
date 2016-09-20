@@ -87,24 +87,35 @@ describe HubHop::Collector::Leg do
         data[:from], data[:to], data[:date]
       )
     end
+    let(:live_pricing_api) do
+      api = instance_double HubHop::SkyScannerAPI::LivePricing
+      allow(api).to receive(:create_session)
+      allow(api).to receive(:poll_session) { leg_result }
+      api
+    end
     before do
       allow(leg).to receive(:wait_a_bit)
       allow(leg).to receive(:time_passed?) { true }
-      allow(HubHop::SkyScannerAPI).
-        to receive(:create_session)
-      allow(HubHop::SkyScannerAPI).
-        to receive(:poll_session) { leg_result }
+      allow(HubHop::SkyScannerAPI::LivePricing).
+        to receive(:new) { live_pricing_api }
+    end
+
+    it "creates a SkyScannerAPI live pricing object" do
+      leg.query
+      expect(HubHop::SkyScannerAPI::LivePricing).
+        to have_received(:new).
+        once
     end
 
     it "creates a SkyScanner search session" do
       leg.query
-      expect(HubHop::SkyScannerAPI).
+      expect(live_pricing_api).
         to have_received(:create_session).
         once
     end
     it "polls a SkyScanner session to get results" do
       leg.query
-      expect(HubHop::SkyScannerAPI).
+      expect(live_pricing_api).
         to have_received(:poll_session).
         once
     end
@@ -123,7 +134,7 @@ describe HubHop::Collector::Leg do
 
     context "(if the session can't retrieve data)" do
       before do
-        allow(HubHop::SkyScannerAPI).
+        allow(live_pricing_api).
           to receive(:poll_session) { false }
       end
 
@@ -140,7 +151,7 @@ describe HubHop::Collector::Leg do
 
     context "(if the session finds no flights" do
       before do
-        allow(HubHop::SkyScannerAPI).
+        allow(live_pricing_api).
           to receive(:poll_session) { [] }
       end
 

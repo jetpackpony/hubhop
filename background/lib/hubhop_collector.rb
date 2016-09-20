@@ -74,14 +74,15 @@ module HubHop
 
       def query
         begin
-          session_url = SkyScannerAPI.create_session @from, @to, @date
+          api = SkyScannerAPI::LivePricing.new @log
+          session_url = api.create_session @from, @to, @date
           leg_id = "#{@from}, #{@to}, #{@date}: #{session_url}"
           res = false
           i = 0
           wait_a_bit 3
           start_time = Time.now
           while !res && (!time_passed?(start_time, 200) || i < 10) do
-            res = SkyScannerAPI.poll_session session_url
+            res = api.poll_session session_url
             wait_a_bit i
             i += 1
           end

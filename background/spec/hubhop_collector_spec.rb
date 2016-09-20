@@ -63,13 +63,6 @@ describe HubHop::Collector do
     end
 
     it "calls no more than 100 requests per minute"
-
-    it "plan" do
-      # Change SSAPI into multiple objects (CreateSessionRequest, PollSessionRequest))
-      # Inject a leg's log object into SSAPI request object
-      # Log the details of API requests via the object
-      fail
-    end
   end
 end
 

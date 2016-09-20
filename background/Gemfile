@@ -9,6 +9,7 @@ gem 'factory_girl'
 gem 'ZenTest'
 gem 'rspec-autotest'
 gem 'webmock'
+gem 'rgl'
 
 gem 'pry'
 gem 'pry-doc'

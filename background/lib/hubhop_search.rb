@@ -8,6 +8,7 @@ module HubHop
   class Search
     include Sidekiq::Worker
     include HubHop::RedisConnect
+    sidekiq_options :retry => false
 
     def perform(request_id)
       @req_id = request_id
@@ -30,7 +31,10 @@ module HubHop
 
     def process
       flight_data = HubHop::Collector.new(@input).collect
-      @cheapest = HubHop::Analyser.new(flight_data).get_cheapest
+      redis.set "#{@req_id}:collected_flights", flight_data.to_json
+      @cheapest = HubHop::FlightGraph.new(
+        flight_data.select { |x| x.is_a? Hash }, @input[:from_place], @input[:to_place], @input[:max_transit_time]
+      ).cheapest
     end
 
     def complete

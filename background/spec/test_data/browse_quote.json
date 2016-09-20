@@ -1,0 +1,86 @@
+{
+  "Quotes": [
+    {
+      "QuoteId": 1,
+      "MinPrice": 14790.0,
+      "Direct": false,
+      "OutboundLeg": {
+        "CarrierIds": [
+          819
+        ],
+        "OriginId": 65540,
+        "DestinationId": 72991,
+        "DepartureDate": "2016-12-01T00:00:00"
+      },
+      "QuoteDateTime": "2016-12-01T21:57:37"
+    }
+  ],
+  "Places": [
+    {
+      "PlaceId": 65540,
+      "IataCode": "LED",
+      "Name": "Санкт-Петербург Пулково",
+      "Type": "Station",
+      "SkyscannerCode": "LED",
+      "CityName": "Санкт-Петербург",
+      "CityId": "PETE",
+      "CountryName": "Россия"
+    },
+    {
+      "PlaceId": 72991,
+      "IataCode": "OPO",
+      "Name": "Порту",
+      "Type": "Station",
+      "SkyscannerCode": "OPO",
+      "CityName": "Порту",
+      "CityId": "PORT",
+      "CountryName": "Португалия"
+    }
+  ],
+  "Carriers": [
+    {
+      "CarrierId": 7,
+      "Name": "Vueling Airlines"
+    },
+    {
+      "CarrierId": 819,
+      "Name": "Aegean Airlines"
+    },
+    {
+      "CarrierId": 900,
+      "Name": "airBaltic"
+    },
+    {
+      "CarrierId": 1218,
+      "Name": "Iberia"
+    },
+    {
+      "CarrierId": 1707,
+      "Name": "SAS"
+    },
+    {
+      "CarrierId": 1710,
+      "Name": "Brussels Airlines"
+    },
+    {
+      "CarrierId": 1717,
+      "Name": "Aeroflot"
+    },
+    {
+      "CarrierId": 1812,
+      "Name": "UTair"
+    }
+  ],
+  "Currencies": [
+    {
+      "Code": "RUB",
+      "Symbol": "p.",
+      "ThousandsSeparator": " ",
+      "DecimalSeparator": ",",
+      "SymbolOnLeft": false,
+      "SpaceBetweenAmountAndSymbol": true,
+      "RoundingCoefficient": 0,
+      "DecimalDigits": 2
+    }
+  ]
+}

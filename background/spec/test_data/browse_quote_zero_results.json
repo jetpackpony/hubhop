@@ -1,0 +1,52 @@
+{
+  "Quotes": [
+  ],
+  "Places": [
+    {
+      "PlaceId": 65540,
+      "IataCode": "LED",
+      "Name": "Санкт-Петербург Пулково",
+      "Type": "Station",
+      "SkyscannerCode": "LED",
+      "CityName": "Санкт-Петербург",
+      "CityId": "PETE",
+      "CountryName": "Россия"
+    },
+    {
+      "PlaceId": 68611,
+      "IataCode": "MUC",
+      "Name": "Мюнхен",
+      "Type": "Station",
+      "SkyscannerCode": "MUC",
+      "CityName": "Мюнхен",
+      "CityId": "MUNI",
+      "CountryName": "Германия"
+    }
+  ],
+  "Carriers": [
+    {
+      "CarrierId": 900,
+      "Name": "airBaltic"
+    },
+    {
+      "CarrierId": 1368,
+      "Name": "Lufthansa"
+    },
+    {
+      "CarrierId": 1717,
+      "Name": "Aeroflot"
+    }
+  ],
+  "Currencies": [
+    {
+      "Code": "RUB",
+      "Symbol": "p.",
+      "ThousandsSeparator": " ",
+      "DecimalSeparator": ",",
+      "SymbolOnLeft": false,
+      "SpaceBetweenAmountAndSymbol": true,
+      "RoundingCoefficient": 0,
+      "DecimalDigits": 2
+    }
+  ]
+}

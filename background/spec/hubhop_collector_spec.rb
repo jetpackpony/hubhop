@@ -8,7 +8,6 @@ describe HubHop::Collector do
 
   describe "#collect" do
     let(:test_hash) { { test: 'test' } }
-    let(:leg_log) { HubHop::LegLog.new "", "", "" }
     let(:leg) { HubHop::Collector::Leg.new }
 
     before do
@@ -120,6 +119,12 @@ describe HubHop::Collector::Leg do
     context "(if the session is successfull)" do
       it "returns an array of flights from the session" do
         expect(leg.query).to eq leg_result
+      end
+      it "logs a message with the number of results retrieved" do
+        leg.query
+        expect(log).
+          to have_received(:log).
+          with("Retrieved 2 results")
       end
     end
 

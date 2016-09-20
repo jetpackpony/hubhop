@@ -5,6 +5,7 @@ module HubHop
     def initialize(input)
       @input = input
       @legs = []
+      @req_id = @input['request_id']
     end
 
     def collect
@@ -60,7 +61,7 @@ module HubHop
     def create_leg(from, to, date)
       @legs << Thread.new do
         leg = Leg.new
-        leg.log = LegLog.new from, to, date
+        leg.log = LegLog.new @req_id, from, to, date
         leg.from = from
         leg.to = to
         leg.date = date
@@ -72,26 +73,32 @@ module HubHop
       attr_accessor :from, :to, :date, :log
 
       def query
-        session_url = SkyScannerAPI.create_session @from, @to, @date
-        leg_id = "#{@from}, #{@to}, #{@date}: #{session_url}"
-        res = false
-        i = 0
-        wait_a_bit 3
-        start_time = Time.now
-        while !res && (!time_passed?(start_time, 200) || i < 10) do
-          res = SkyScannerAPI.poll_session session_url
-          wait_a_bit i
-          i += 1
-        end
+        begin
+          session_url = SkyScannerAPI.create_session @from, @to, @date
+          leg_id = "#{@from}, #{@to}, #{@date}: #{session_url}"
+          res = false
+          i = 0
+          wait_a_bit 3
+          start_time = Time.now
+          while !res && (!time_passed?(start_time, 200) || i < 10) do
+            res = SkyScannerAPI.poll_session session_url
+            wait_a_bit i
+            i += 1
+          end
 
-        if !res
-          @log.log "Failed to retrieve data"
+          if !res
+            @log.log "Failed to retrieve data"
+            []
+          elsif res.count == 0
+            @log.log "Got zero results for this leg!"
+            []
+          else
+            @log.log "Retrieved #{res.count} results"
+            res
+          end
+        rescue Exception => e
+          @log.log "An exception occured: #{e.message}"
           []
-        elsif res.count == 0
-          @log.log "Got zero results for this leg!"
-          []
-        else
-          res
         end
       end
 

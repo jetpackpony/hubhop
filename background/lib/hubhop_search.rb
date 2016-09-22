@@ -30,16 +30,36 @@ module HubHop
     end
 
     def process
-      flight_data = HubHop::Collector.new(@input).collect
-      redis.set "#{@req_id}:collected_flights", flight_data.to_json
+      flight_data = json_parse(
+        redis.get "#{@req_id}:collected_flights"
+      )
+
+      if flight_data.nil?
+        flight_data = HubHop::Collector.new(@input).collect
+        redis.set "#{@req_id}:collected_flights", flight_data.to_json
+      end
       @cheapest = HubHop::FlightGraph.new(
-        flight_data.select { |x| x.is_a? Hash }, @input[:from_place], @input[:to_place], @input[:max_transit_time]
+        flight_data.select { |x| x.is_a? Hash },
+        @input[:from_place],
+        @input[:to_place],
+        @input[:max_transit_time]
       ).cheapest
     end
 
     def complete
       redis.set "#{@req_id}:completed", "true"
       redis.set "#{@req_id}:results", { cheapest_option: @cheapest }.to_json
+    end
+
+    def json_parse(json)
+      begin
+        JSON.parse(
+          json,
+          :symbolize_keys => true
+        ).map { |x| (x.is_a? Hash) ? x.deep_symbolize_keys : x }
+      rescue
+        nil
+      end
     end
   end
 end

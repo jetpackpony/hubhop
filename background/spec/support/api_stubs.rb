@@ -53,6 +53,13 @@ module HubHop
                    :body => HubHopTestData.live_prices_complete,
                    :headers => {})
     end
+
+    def stub_poll_session_429
+      stub_request(:get, /.*#{HubHopTestData.session_url}.*/).
+         to_return(:status => 429,
+                   :body => "",
+                   :headers => {})
+    end
   end
 end
 

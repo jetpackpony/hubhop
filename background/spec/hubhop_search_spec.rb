@@ -28,6 +28,10 @@ describe HubHop::Search do
       allow(HubHop::FlightGraph).to receive(:new) { flight_graph }
     end
 
+    after(:each) do
+      redis.del "#{request_id}:collected_flights"
+    end
+
     context "(the flights are not yet collected)" do
       it "collects the information about all the flights" do
         perfrom_search
@@ -43,8 +47,17 @@ describe HubHop::Search do
     end
 
     context "(the flights are already collected)" do
-      it "does not call the collector"
-      it "loads the flights from the DB"
+      before do
+        redis.set(
+          "#{request_id}:collected_flights",
+          unfiltered_data.to_json
+        )
+      end
+      it "does not call the collector" do
+        perfrom_search
+        expect(HubHop::Collector).
+          not_to have_received(:new)
+      end
     end
 
     it "chooses the cheapest route option" do

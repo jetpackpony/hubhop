@@ -16,9 +16,14 @@ module HubHop
       end
 
       def poll_session(session_url)
-        api_response = JSON.parse(live_prices_results session_url)
-        return false if !session_complete?(api_response)
-        distill_session api_response
+        begin
+          api_response = JSON.parse(live_prices_results session_url)
+          return false if !session_complete?(api_response)
+          distill_session api_response
+        rescue Exception => e
+          log e.message
+          raise "Couldn't poll a search session result"
+        end
       end
 
       def session_complete?(api_response)
@@ -104,6 +109,7 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
+            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
             SkyScannerAPI::wait_a_bit i
             i += 1
           end
@@ -132,12 +138,13 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
-            wait_a_bit i
+            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
+            SkyScannerAPI::wait_a_bit i
             i += 1
           end
         end
 
-        raise "Can't retrieve data for from:#{from}, to:#{to}, date:#{date}"
+        raise "Can't retrieve data for session_url: #{session_url}"
       end
     end
   end

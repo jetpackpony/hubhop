@@ -41,12 +41,25 @@ describe HubHop::SkyScannerAPI do
           end
           expect(@stub1).to have_been_made.times(5)
         end
+        it "logs a message about re-running the request" do
+          begin
+            create_session
+          rescue
+          end
+          expect(log).
+            to have_received(:log).
+            with("Re-running the request. 429. Body: ").
+            at_least(:once)
+        end
         it "logs an error message" do
           begin
             create_session
           rescue
           end
-          expect(log).to have_received(:log).at_least(:once)
+          expect(log).
+            to have_received(:log).
+            with("Can't retrieve data for from:LED, to:DME, date:2016-12-01").
+            at_least(:once)
         end
         it "raises an error" do
           expect { create_session }.
@@ -72,7 +85,23 @@ describe HubHop::SkyScannerAPI do
         end
       end
       context "(with response unsuccessful)" do
-        it "raises an error"
+        before do
+          stub_poll_session_429
+        end
+        it "logs a message about re-running the request" do
+          begin
+            poll_session
+          rescue
+          end
+          expect(log).
+            to have_received(:log).
+            with("Re-running the request. 429. Body: ").
+            at_least(:once)
+        end
+        it "raises an error" do
+          expect { poll_session }.
+            to raise_error "Couldn't poll a search session result"
+        end
       end
     end
   end

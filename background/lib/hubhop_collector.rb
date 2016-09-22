@@ -98,7 +98,7 @@ module HubHop
             res
           end
         rescue Exception => e
-          @log.log "An exception occured: #{e.message}"
+          @log.log "Failed to load leg results: #{e.message}"
           []
         end
       end

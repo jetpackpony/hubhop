@@ -30,6 +30,9 @@ describe HubHop::Search do
 
     after(:each) do
       redis.del "#{request_id}:collected_flights"
+      redis.del "#{request_id}:completed"
+      redis.del "#{request_id}:results"
+      redis.del "#{request_id}:request"
     end
 
     context "(the flights are not yet collected)" do

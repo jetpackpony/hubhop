@@ -67,6 +67,7 @@ describe HubHop::FlightGraph do
     it "keeps the lowest price in case of the parallel edges" do
       edge = graph.get_edge ["DME", false, :from], ["BCN", bcn_date_1, :to]
       expect(edge[:price]).to eq 6892.38
+      expect(edge[:flight_id]).to eq 9
     end
   end
 

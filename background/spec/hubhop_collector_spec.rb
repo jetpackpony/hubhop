@@ -128,7 +128,7 @@ describe HubHop::Collector::Leg do
         leg.query
         expect(log).
           to have_received(:log).
-          with("Retrieved 2 results")
+          with("Retrieved 2 results", :info)
       end
     end
 
@@ -145,7 +145,7 @@ describe HubHop::Collector::Leg do
         leg.query
         expect(log).
           to have_received(:log).
-          with("Failed to retrieve data")
+          with("Failed to retrieve data", :error)
       end
     end
 
@@ -162,7 +162,7 @@ describe HubHop::Collector::Leg do
         leg.query
         expect(log).
           to have_received(:log).
-          with("Got zero results for this leg!")
+          with("Got zero results for this leg!", :info)
       end
     end
   end

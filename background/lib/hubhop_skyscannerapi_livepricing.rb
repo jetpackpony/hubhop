@@ -10,7 +10,7 @@ module HubHop
           api_response = live_prices_session from, to, date
           api_response['location']
         rescue Exception => e
-          log e.message
+          log e.message, :error
           raise "Couldn't create a search session"
         end
       end
@@ -21,7 +21,7 @@ module HubHop
           return false if !session_complete?(api_response)
           distill_session api_response
         rescue Exception => e
-          log e.message
+          log e.message, :error
           raise "Couldn't poll a search session result"
         end
       end
@@ -84,8 +84,8 @@ module HubHop
         data["Carriers"].find { |x| x["Id"] == id }
       end
 
-      def log(str)
-        @log.log str
+      def log(str, level)
+        @log.log str, level
       end
 
       def live_prices_session(from, to, date)
@@ -109,7 +109,7 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
-            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
+            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
             SkyScannerAPI::wait_a_bit i
             i += 1
           end
@@ -138,7 +138,7 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
-            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
+            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
             SkyScannerAPI::wait_a_bit i
             i += 1
           end

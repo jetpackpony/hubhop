@@ -88,17 +88,17 @@ module HubHop
           end
 
           if !res
-            @log.log "Failed to retrieve data"
+            @log.log "Failed to retrieve data", :error
             []
           elsif res.count == 0
-            @log.log "Got zero results for this leg!"
+            @log.log "Got zero results for this leg!", :info
             []
           else
-            @log.log "Retrieved #{res.count} results"
+            @log.log "Retrieved #{res.count} results", :info
             res
           end
         rescue Exception => e
-          @log.log "Failed to load leg results: #{e.message}"
+          @log.log "Failed to load leg results: #{e.message}", :error
           []
         end
       end

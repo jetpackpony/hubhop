@@ -48,7 +48,7 @@ describe HubHop::SkyScannerAPI do
           end
           expect(log).
             to have_received(:log).
-            with("Re-running the request. 429. Body: ").
+            with("Re-running the request. 429. Body: ", :info).
             at_least(:once)
         end
         it "logs an error message" do
@@ -58,7 +58,7 @@ describe HubHop::SkyScannerAPI do
           end
           expect(log).
             to have_received(:log).
-            with("Can't retrieve data for from:LED, to:DME, date:2016-12-01").
+            with("Can't retrieve data for from:LED, to:DME, date:2016-12-01", :error).
             at_least(:once)
         end
         it "raises an error" do
@@ -95,7 +95,7 @@ describe HubHop::SkyScannerAPI do
           end
           expect(log).
             to have_received(:log).
-            with("Re-running the request. 429. Body: ").
+            with("Re-running the request. 429. Body: ", :info).
             at_least(:once)
         end
         it "raises an error" do

@@ -6,8 +6,8 @@ module HubHop
       @req_id, @from, @to, @date = request_id, from, to, date
     end
 
-    def log(text)
-      redis.set key, append(preprocess(text))
+    def log(text, level)
+      redis.set key, append(preprocess(text, level))
     end
 
     private
@@ -20,8 +20,14 @@ module HubHop
       (redis.get(key) || "") + text
     end
 
-    def preprocess(text)
-      DateTime.now.strftime("[%Y-%m-%d %H:%M:%S] ") + text + "\n"
+    def preprocess(text, level)
+      txt = DateTime.now.strftime("[%Y-%m-%d %H:%M:%S] ") + text + "\n"
+      if level == :error
+        caller(0).each do |str|
+          txt += "    " + str + "\n"
+        end
+      end
+      txt
     end
   end
 end

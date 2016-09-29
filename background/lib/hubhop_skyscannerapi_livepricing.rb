@@ -142,7 +142,7 @@ module HubHop
           res = SkyScannerAPI::perform_request adr
 
           case res.code
-          when '200', '304'
+          when '200'
             return res.body
           when '410'
             raise "Session expired"
@@ -150,6 +150,10 @@ module HubHop
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
             log "Re-running the request. #{res.code}. Body: #{res.body}", :info
+            SkyScannerAPI::wait_a_bit i
+            i += 1
+          when '304'
+            log "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}", :info
             SkyScannerAPI::wait_a_bit i
             i += 1
           end

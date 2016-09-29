@@ -22,7 +22,8 @@ module HubHop
 
       def poll_session(session_url)
         begin
-          api_response = JSON.parse(live_prices_results session_url)
+          api_response = live_prices_results session_url
+          api_response = JSON.parse(api_response)
           return false if !session_complete?(api_response)
           distill_session api_response
         rescue Exception => e
@@ -99,7 +100,7 @@ module HubHop
       end
 
       def live_prices_session(from, to, date)
-        uri = URI(SkyScannerAPI::CREATE_PRICING_SESSION_ADDRESS)
+        uri = SkyScannerAPI::CREATE_PRICING_SESSION_ADDRESS
         params = {
           "apiKey" => ENV['API_KEY'], "country" => "RU",
           "currency" => "RUB", "locale" => "ru-RU",
@@ -110,7 +111,7 @@ module HubHop
         headers = {'Accept' => 'application/json'}
 
         i = 0
-        while i < 5 do
+        while i < 10 do
           res = SkyScannerAPI::post uri, params, headers
 
           case res.code
@@ -137,8 +138,8 @@ module HubHop
         #adr << "&pagesize=3"
 
         i = 0
-        while i < 5 do
-          res = SkyScannerAPI::perform_request URI(adr)
+        while i < 10 do
+          res = SkyScannerAPI::perform_request adr
 
           case res.code
           when '200', '304'

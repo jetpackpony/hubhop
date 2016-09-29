@@ -56,7 +56,7 @@ module HubHop
 
         i = 0
         while i < 5 do
-          res = SkyScannerAPI::perform_request URI(adr)
+          res = SkyScannerAPI::perform_request adr
 
           case res.code
           when '200'

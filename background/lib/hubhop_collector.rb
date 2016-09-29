@@ -4,6 +4,7 @@ module HubHop
 
     def initialize(input)
       @input = input
+      @logs = []
       @legs = []
       @req_id = @input['request_id']
     end
@@ -11,7 +12,11 @@ module HubHop
     def collect
       start_all_legs
 
-      @legs.each(&:join).inject([]) do |res, thread|
+      @legs.each(&:join)
+
+      HubHop::LegLog.merge_logs @req_id, @logs
+
+      @legs.inject([]) do |res, thread|
         res.concat thread[:output]
       end
     end
@@ -59,9 +64,11 @@ module HubHop
     end
 
     def create_leg(from, to, date)
+      log = LegLog.new(@req_id, from, to, date)
+      @logs << log
       @legs << Thread.new do
         leg = Leg.new
-        leg.log = LegLog.new @req_id, from, to, date
+        leg.log = log
         leg.from = from
         leg.to = to
         leg.date = date
@@ -75,8 +82,10 @@ module HubHop
       def query
         begin
           api = SkyScannerAPI::LivePricing.new @log
+          @log.log "Start creating session for #{@from}, #{@to}, #{@date}", :info
           session_url = api.create_session @from, @to, @date
           leg_id = "#{@from}, #{@to}, #{@date}: #{session_url}"
+          @log.log "Begin polling #{leg_id}", :info
           res = false
           i = 0
           wait_a_bit 3

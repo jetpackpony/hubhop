@@ -10,7 +10,12 @@ module HubHop
           api_response = live_prices_session from, to, date
           api_response['location']
         rescue Exception => e
-          log e.message, :error
+          msg = e.message + "\n"
+          e.backtrace.each do |x|
+            msg += "        " + x + "\n"
+          end
+          msg += "=================================================="
+          log msg, :error
           raise "Couldn't create a search session"
         end
       end
@@ -21,7 +26,12 @@ module HubHop
           return false if !session_complete?(api_response)
           distill_session api_response
         rescue Exception => e
-          log e.message, :error
+          msg = e.message + "\n"
+          e.backtrace.each do |x|
+            msg += "        " + x + "\n"
+          end
+          msg += "=================================================="
+          log msg, :error
           raise "Couldn't poll a search session result"
         end
       end

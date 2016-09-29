@@ -11,6 +11,7 @@ describe HubHop::Collector do
     let(:leg) { HubHop::Collector::Leg.new }
 
     before do
+      allow(HubHop::LegLog).to receive(:merge_logs)
       l = instance_double(HubHop::Collector::Leg)
       allow(l).to receive(:from=)
       allow(l).to receive(:to=)
@@ -62,7 +63,10 @@ describe HubHop::Collector do
       expect(collector.collect).to include test_hash
     end
 
-    it "calls no more than 100 requests per minute"
+    it "merges all the legs' logs into one record" do
+      collector.collect
+      expect(HubHop::LegLog).to have_received(:merge_logs).once
+    end
   end
 end
 

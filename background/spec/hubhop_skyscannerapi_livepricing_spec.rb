@@ -58,7 +58,7 @@ describe HubHop::SkyScannerAPI do
           end
           expect(log).
             to have_received(:log).
-            with("Can't retrieve data for from:LED, to:DME, date:2016-12-01", :error).
+            with(/Can't retrieve data for from:LED, to:DME, date:2016-12-01/, :error).
             at_least(:once)
         end
         it "raises an error" do

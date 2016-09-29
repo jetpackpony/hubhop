@@ -92,7 +92,7 @@ module HubHop
         else
           if edge[:price] > flight[:price]
             edge[:price] = flight[:price]
-            edge[:flight_id] = flight[:flight_id]
+            edge[:flight_id] = flight_id
           end
         end
 

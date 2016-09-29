@@ -33,7 +33,6 @@ module HubHop
       flight_data = json_parse(
         redis.get "#{@req_id}:collected_flights"
       )
-
       if flight_data.nil?
         flight_data = HubHop::Collector.new(@input).collect
         redis.set "#{@req_id}:collected_flights", flight_data.to_json
@@ -56,7 +55,14 @@ module HubHop
         JSON.parse(
           json,
           :symbolize_keys => true
-        ).map { |x| (x.is_a? Hash) ? x.deep_symbolize_keys : x }
+        ).map { |x| (x.is_a? Hash) ? x.deep_symbolize_keys : x }.
+          map do |x|
+            if x.is_a? Hash
+              x[:departure] = DateTime.parse(x[:departure])
+              x[:arrival] = DateTime.parse(x[:arrival])
+            end
+            x
+          end
       rescue
         nil
       end

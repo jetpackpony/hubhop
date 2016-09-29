@@ -10,18 +10,29 @@ module HubHop
           api_response = live_prices_session from, to, date
           api_response['location']
         rescue Exception => e
-          log e.message
+          msg = e.message + "\n"
+          e.backtrace.each do |x|
+            msg += "        " + x + "\n"
+          end
+          msg += "=================================================="
+          log msg, :error
           raise "Couldn't create a search session"
         end
       end
 
       def poll_session(session_url)
         begin
-          api_response = JSON.parse(live_prices_results session_url)
+          api_response = live_prices_results session_url
+          api_response = JSON.parse(api_response)
           return false if !session_complete?(api_response)
           distill_session api_response
         rescue Exception => e
-          log e.message
+          msg = e.message + "\n"
+          e.backtrace.each do |x|
+            msg += "        " + x + "\n"
+          end
+          msg += "=================================================="
+          log msg, :error
           raise "Couldn't poll a search session result"
         end
       end
@@ -84,12 +95,12 @@ module HubHop
         data["Carriers"].find { |x| x["Id"] == id }
       end
 
-      def log(str)
-        @log.log str
+      def log(str, level)
+        @log.log str, level
       end
 
       def live_prices_session(from, to, date)
-        uri = URI(SkyScannerAPI::CREATE_PRICING_SESSION_ADDRESS)
+        uri = SkyScannerAPI::CREATE_PRICING_SESSION_ADDRESS
         params = {
           "apiKey" => ENV['API_KEY'], "country" => "RU",
           "currency" => "RUB", "locale" => "ru-RU",
@@ -100,7 +111,7 @@ module HubHop
         headers = {'Accept' => 'application/json'}
 
         i = 0
-        while i < 5 do
+        while i < 10 do
           res = SkyScannerAPI::post uri, params, headers
 
           case res.code
@@ -109,7 +120,7 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
-            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
+            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
             SkyScannerAPI::wait_a_bit i
             i += 1
           end
@@ -127,18 +138,22 @@ module HubHop
         #adr << "&pagesize=3"
 
         i = 0
-        while i < 5 do
-          res = SkyScannerAPI::perform_request URI(adr)
+        while i < 10 do
+          res = SkyScannerAPI::perform_request adr
 
           case res.code
-          when '200', '304'
+          when '200'
             return res.body
           when '410'
             raise "Session expired"
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
-            @log.log "Re-running the request. #{res.code}. Body: #{res.body}"
+            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
+            SkyScannerAPI::wait_a_bit i
+            i += 1
+          when '304'
+            log "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}", :info
             SkyScannerAPI::wait_a_bit i
             i += 1
           end

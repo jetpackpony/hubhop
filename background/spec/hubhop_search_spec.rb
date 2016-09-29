@@ -61,6 +61,17 @@ describe HubHop::Search do
         expect(HubHop::Collector).
           not_to have_received(:new)
       end
+      it "converts string dates into date objects" do
+        perfrom_search
+        expect(HubHop::FlightGraph).
+          to have_received(:new).
+          with(
+            collected_data,
+            form_data[:from_place],
+            form_data[:to_place],
+            form_data[:max_transit_time]
+          )
+      end
     end
 
     it "chooses the cheapest route option" do

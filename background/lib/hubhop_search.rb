@@ -11,10 +11,13 @@ module HubHop
     sidekiq_options :retry => false
 
     def perform(request_id)
+      puts "performed request #{request_id}"
+=begin
       @req_id = request_id
       setup
       process
       complete
+=end
     end
 
     private

@@ -11,7 +11,6 @@ module HubHop
     sidekiq_options :retry => false
 
     def perform(request_id)
-      puts "start processing request #{request_id}"
       @req_id = request_id
       setup
       process

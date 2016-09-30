@@ -14,6 +14,14 @@ module HubHopTestData
     }
   end
 
+  def self.cheapest_five
+    ["something"]
+  end
+
+  def self.cheapest_direct
+    cheapest_option
+  end
+
   def self.led_opo_legs
     [
       HubHopTestData.collected_data.find do |x|

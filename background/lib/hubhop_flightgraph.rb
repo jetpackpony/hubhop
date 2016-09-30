@@ -24,6 +24,12 @@ module HubHop
       end
     end
 
+    def cheapest_five
+    end
+
+    def cheapest_direct
+    end
+
     def get_vertex(place, time, to_from)
       res = @vertices.find do |key, x|
         x[:place] == place && x[:time] == time && x[:to_from] == to_from

@@ -21,6 +21,7 @@ describe HubHop::FlightGraph do
   let(:led_opo_legs) { HubHopTestData.led_opo_legs }
   let(:dme_lis_legs) { HubHopTestData.dme_lis_legs }
   let(:cheapest_route) { HubHopTestData.cheapest_option }
+  let(:cheapest_five) { HubHopTestData.cheapest_five }
 
   describe "#load_flights" do
     it "creates an edge for each flight in the list" do
@@ -127,5 +128,15 @@ describe HubHop::FlightGraph do
     it "returns the cheapest route" do
       expect(graph.cheapest).to eq cheapest_route
     end
+  end
+
+  describe "#cheapest_five" do
+    it "returns five cheapest routes" do
+      expect(graph.cheapest_five).to eq cheapest_five
+    end
+  end
+
+  describe "#cheapest_direct" do
+    it "returns the cheapest direct flight"
   end
 end

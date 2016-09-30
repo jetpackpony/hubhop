@@ -7,6 +7,8 @@ describe HubHop::Search do
   let(:form_data) { HubHopTestData.form_data }
   let(:collected_data) { HubHopTestData.collected_data }
   let(:cheapest_option) { HubHopTestData.cheapest_option }
+  let(:cheapest_direct) { HubHopTestData.cheapest_direct }
+  let(:cheapest_five) { HubHopTestData.cheapest_five }
   let(:request_id) { "testme" }
   let(:create_flihgt_graph) {
     HubHop::FlightGraph.new(
@@ -15,6 +17,10 @@ describe HubHop::Search do
   }
   let(:perfrom_search) { HubHop::Search.new.perform request_id }
   let(:unfiltered_data) { HubHopTestData::collected_data_unfiltered }
+  let(:results) { {
+    cheapest_five: cheapest_five,
+    cheapest_direct: cheapest_direct
+  } }
 
   describe "#perform" do
     before do
@@ -25,6 +31,8 @@ describe HubHop::Search do
 
       flight_graph = instance_double(HubHop::FlightGraph)
       allow(flight_graph).to receive(:cheapest) { cheapest_option }
+      allow(flight_graph).to receive(:cheapest_direct) { cheapest_direct }
+      allow(flight_graph).to receive(:cheapest_five) { cheapest_five }
       allow(HubHop::FlightGraph).to receive(:new) { flight_graph }
     end
 
@@ -83,7 +91,7 @@ describe HubHop::Search do
     it "writes the results to the database" do
       perfrom_search
       expect(redis.get "#{request_id}:results").
-        to eq({ cheapest_option: cheapest_option }.to_json)
+        to eq(results.to_json)
     end
     it "marks the request in the database as completed" do
       perfrom_search

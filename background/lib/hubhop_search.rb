@@ -37,17 +37,21 @@ module HubHop
         flight_data = HubHop::Collector.new(@input).collect
         redis.set "#{@req_id}:collected_flights", flight_data.to_json
       end
-      @cheapest = HubHop::FlightGraph.new(
+      graph = HubHop::FlightGraph.new(
         flight_data.select { |x| x.is_a? Hash },
         @input[:from_place],
         @input[:to_place],
         @input[:max_transit_time]
-      ).cheapest
+      )
+      @results = {
+        cheapest_five: graph.cheapest_five,
+        cheapest_direct: graph.cheapest_direct
+      }
     end
 
     def complete
       redis.set "#{@req_id}:completed", "true"
-      redis.set "#{@req_id}:results", { cheapest_option: @cheapest }.to_json
+      redis.set "#{@req_id}:results", @results.to_json
     end
 
     def json_parse(json)

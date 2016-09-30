@@ -3,4 +3,4 @@
 # heroku run console pry
 # heroku console pry
 require 'pry'
-pry
+pry -r "./background/lib/hubhop.rb"

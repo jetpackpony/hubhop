@@ -8,6 +8,7 @@ module HubHop
       def create_session(from, to, date)
         begin
           api_response = live_prices_session from, to, date
+          @log.debug "Got api response: #{api_response.inspect}"
           api_response['location']
         rescue Exception => e
           msg = e.message + "\n"
@@ -15,16 +16,21 @@ module HubHop
             msg += "        " + x + "\n"
           end
           msg += "=================================================="
-          log msg, :error
-          raise "Couldn't create a search session"
+          @log.error msg
+          raise "Couldn't create search session"
         end
       end
 
       def poll_session(session_url)
         begin
           api_response = live_prices_results session_url
+          @log.debug "Got api response: #{api_response.inspect}"
           api_response = JSON.parse(api_response)
-          return false if !session_complete?(api_response)
+          @log.debug "Parsed api response: #{api_response.inspect}"
+          if !session_complete?(api_response)
+            @log.info "Session is not yet complete on SkyScanner's side"
+            return false 
+          end
           distill_session api_response
         rescue Exception => e
           msg = e.message + "\n"
@@ -32,7 +38,7 @@ module HubHop
             msg += "        " + x + "\n"
           end
           msg += "=================================================="
-          log msg, :error
+          @log.error msg
           raise "Couldn't poll a search session result"
         end
       end
@@ -76,7 +82,6 @@ module HubHop
           res.push tmp
         end
         res
-
       end
 
       def get_agent(id, data)
@@ -93,10 +98,6 @@ module HubHop
 
       def get_carrier(id, data)
         data["Carriers"].find { |x| x["Id"] == id }
-      end
-
-      def log(str, level)
-        @log.log str, level
       end
 
       def live_prices_session(from, to, date)
@@ -120,7 +121,7 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
-            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
+            @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
             SkyScannerAPI::wait_a_bit i
             i += 1
           end
@@ -149,11 +150,11 @@ module HubHop
           when '400', '403'
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
-            log "Re-running the request. #{res.code}. Body: #{res.body}", :info
+            @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
             SkyScannerAPI::wait_a_bit i
             i += 1
           when '304'
-            log "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}", :info
+            @log.info "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}"
             SkyScannerAPI::wait_a_bit i
             i += 1
           end

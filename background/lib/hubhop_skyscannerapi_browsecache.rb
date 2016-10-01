@@ -10,15 +10,11 @@ module HubHop
         begin
           api_response = browse_quotes from, to, date
         rescue Exception => e
-          log e.message, :error
+          @log.error e.message
           return []
         end
-        log "For #{from}->#{to}@#{date} got data: #{api_response}", :info
+        @log.info "For #{from}->#{to}@#{date} got data: #{api_response}"
         distill JSON.parse(api_response)
-      end
-
-      def log(str, level)
-        @log.log str, level
       end
 
       def distill(json)

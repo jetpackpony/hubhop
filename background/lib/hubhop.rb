@@ -5,7 +5,7 @@ require 'pry'
 Dotenv.load
 
 require_relative "./reddis_connect"
-require_relative "./hubhop_log"
+require_relative "./hubhop_logger"
 require_relative "./hubhop_leg_log"
 require_relative "./hubhop_request"
 require_relative "./hubhop_search"

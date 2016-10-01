@@ -3,8 +3,9 @@ require_relative '../lib/hubhop'
 
 describe HubHop::SkyScannerAPI do
   let(:log) do
-    l = instance_double HubHop::LegLog
-    allow(l).to receive(:log)
+    l = instance_double Logger
+    allow(l).to receive(:error)
+    allow(l).to receive(:info)
     l
   end
   before do
@@ -61,7 +62,7 @@ describe HubHop::SkyScannerAPI do
             browse_cache_api.get_cached_quote "LED", "DME", "2016-12-01"
           rescue
           end
-          expect(log).to have_received(:log).at_least(:once)
+          expect(log).to have_received(:error).at_least(:once)
         end
       end
     end

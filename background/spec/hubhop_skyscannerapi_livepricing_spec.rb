@@ -3,8 +3,10 @@ require_relative '../lib/hubhop'
 
 describe HubHop::SkyScannerAPI do
   let(:log) do
-    l = instance_double HubHop::LegLog
-    allow(l).to receive(:log)
+    l = instance_double Logger
+    allow(l).to receive(:error)
+    allow(l).to receive(:info)
+    allow(l).to receive(:debug)
     l
   end
   before do
@@ -78,8 +80,8 @@ describe HubHop::SkyScannerAPI do
           rescue
           end
           expect(log).
-            to have_received(:log).
-            with("Re-running the request. 429. Body: ", :info).
+            to have_received(:info).
+            with("Re-running the request. 429. Body: ").
             at_least(:once)
         end
         it "logs an error message" do
@@ -87,14 +89,15 @@ describe HubHop::SkyScannerAPI do
             create_session
           rescue
           end
+
           expect(log).
-            to have_received(:log).
-            with(/Can't retrieve data for from:LED, to:DME, date:2016-12-01/, :error).
+            to have_received(:error).
+            with(/Can't retrieve data for from:LED, to:DME, date:2016-12-01/).
             at_least(:once)
         end
         it "raises an error" do
           expect { create_session }.
-            to raise_error "Couldn't create a search session"
+            to raise_error "Couldn't create search session"
         end
       end
     end
@@ -125,8 +128,8 @@ describe HubHop::SkyScannerAPI do
           rescue
           end
           expect(log).
-            to have_received(:log).
-            with("Re-running the request. 429. Body: ", :info).
+            to have_received(:info).
+            with("Re-running the request. 429. Body: ").
             at_least(:once)
         end
         it "raises an error" do

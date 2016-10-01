@@ -11,7 +11,6 @@ describe HubHop::Collector do
     let(:leg) { HubHop::Collector::Leg.new }
 
     before do
-      allow(HubHop::LegLog).to receive(:merge_logs)
       l = instance_double(HubHop::Collector::Leg)
       allow(l).to receive(:from=)
       allow(l).to receive(:to=)
@@ -62,11 +61,6 @@ describe HubHop::Collector do
     it "includes the expected results in the result array" do
       expect(collector.collect).to include test_hash
     end
-
-    it "merges all the legs' logs into one record" do
-      collector.collect
-      expect(HubHop::LegLog).to have_received(:merge_logs).once
-    end
   end
 end
 
@@ -74,8 +68,10 @@ describe HubHop::Collector::Leg do
   describe "#query" do
     let(:data) { HubHopTestData.test_legs.first }
     let(:log) do
-      l = instance_double HubHop::LegLog
-      allow(l).to receive(:log)
+      l = instance_double Logger
+      allow(l).to receive(:info)
+      allow(l).to receive(:error)
+      allow(l).to receive(:debug)
       l
     end
     let(:leg) do
@@ -131,8 +127,8 @@ describe HubHop::Collector::Leg do
       it "logs a message with the number of results retrieved" do
         leg.query
         expect(log).
-          to have_received(:log).
-          with("Retrieved 2 results", :info)
+          to have_received(:info).
+          with("Retrieved 2 results")
       end
     end
 
@@ -148,8 +144,8 @@ describe HubHop::Collector::Leg do
       it "logs a message with an error", focus: true do
         leg.query
         expect(log).
-          to have_received(:log).
-          with("Failed to retrieve data", :error)
+          to have_received(:error).
+          with("Failed to retrieve data")
       end
     end
 
@@ -165,8 +161,8 @@ describe HubHop::Collector::Leg do
       it "logs a message with an error", focus: true do
         leg.query
         expect(log).
-          to have_received(:log).
-          with("Got zero results for this leg!", :info)
+          to have_received(:info).
+          with("Got zero results for this leg!")
       end
     end
   end

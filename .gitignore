@@ -1,5 +1,5 @@
 .env
 .byebug_history
 *.dot
-tmp/
-log/
+tmp/*
+log/*

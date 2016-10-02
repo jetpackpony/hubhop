@@ -7,7 +7,6 @@ end
 module HubHop
   class Search
     include Sidekiq::Worker
-    include HubHop::RedisConnect
     sidekiq_options :retry => false
 
     def perform(request_id)
@@ -23,7 +22,7 @@ module HubHop
 
     def setup
       HubHop::logger.info "Loading request data"
-      data = redis.get("#{@req_id}:request")
+      data = HubHop::redis.get("#{@req_id}:request")
       HubHop::logger.debug "Loaded request data: '#{data}'"
       begin
         @input = JSON.parse(data, symbolize_names: true)[:request_data]
@@ -39,7 +38,7 @@ module HubHop
     def process
       HubHop::logger.info "Start processing request"
       flight_data = json_parse(
-        redis.get "#{@req_id}:collected_flights"
+        HubHop::redis.get "#{@req_id}:collected_flights"
       )
       if flight_data.nil?
         HubHop::logger.info "Flight data not yet collected"
@@ -47,7 +46,7 @@ module HubHop
         flight_data = HubHop::Collector.new(@input).collect
         HubHop::logger.info "Collecting flight data complete"
         HubHop::logger.debug "Collected flight data: #{flight_data.inspect}"
-        redis.set "#{@req_id}:collected_flights", flight_data.to_json
+        HubHop::redis.set "#{@req_id}:collected_flights", flight_data.to_json
       else
         HubHop::logger.info "Flight data already collected, loaded from DB"
         HubHop::logger.debug "Collected flight data: #{flight_data.inspect}"
@@ -64,8 +63,8 @@ module HubHop
 
     def complete
       HubHop::logger.info "Complete processing request. Writing result to DB"
-      redis.set "#{@req_id}:completed", "true"
-      redis.set "#{@req_id}:results", { cheapest_option: @cheapest }.to_json
+      HubHop::redis.set "#{@req_id}:completed", "true"
+      HubHop::redis.set "#{@req_id}:results", { cheapest_option: @cheapest }.to_json
     end
 
     def json_parse(json)

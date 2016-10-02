@@ -1,6 +1,4 @@
 describe HubHop::LegLog do
-  include HubHop::RedisConnect
-
   prefix = "[test_id:LED->DME_2016-12-02]"
   let(:leg_log) { HubHop::LegLog.new "test_id", "LED", "DME", "2016-12-02" }
   before do

@@ -1,7 +1,5 @@
 module HubHop
   class Collector
-    include HubHop::RedisConnect
-
     def initialize(input)
       @input = input
       @logs = []

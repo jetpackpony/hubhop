@@ -1,11 +1,10 @@
 require_relative '../lib/hubhop'
 
 describe HubHop::Request do
-  include HubHop::RedisConnect
   let(:request) { HubHop::Request.new }
 
   after(:all) do
-    redis.flushdb
+    HubHop::redis.flushdb
   end
 
   describe "#start" do
@@ -39,7 +38,7 @@ describe HubHop::Request do
       data
     end
 
-    let(:redis_record) { redis.get("#{request.request_id}:request") }
+    let(:redis_record) { HubHop::redis.get("#{request.request_id}:request") }
 
     before do
       allow(HubHop::Search).to receive(:perform_async)
@@ -97,7 +96,7 @@ describe HubHop::Request do
   describe "#check" do
     context ">> if request processing not completed," do
       it "returns false" do
-        redis.set "#{request.request_id}:completed", "false"
+        HubHop::redis.set "#{request.request_id}:completed", "false"
         expect(request.check).to be false
       end
     end
@@ -105,8 +104,8 @@ describe HubHop::Request do
     context ">> request processing has completed," do
       let(:results) { { results: true }.to_json }
       it "returns hash with results" do
-        redis.set "#{request.request_id}:completed", "true"
-        redis.set "#{request.request_id}:results", results
+        HubHop::redis.set "#{request.request_id}:completed", "true"
+        HubHop::redis.set "#{request.request_id}:results", results
         expect(request.check).to eq results
       end
     end

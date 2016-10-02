@@ -2,8 +2,6 @@ require_relative 'test_data/flights'
 require_relative "../lib/hubhop"
 
 describe HubHop::Search do
-  include HubHop::RedisConnect
-
   let(:form_data) { HubHopTestData.form_data }
   let(:collected_data) { HubHopTestData.collected_data }
   let(:cheapest_option) { HubHopTestData.cheapest_option }
@@ -18,7 +16,7 @@ describe HubHop::Search do
 
   describe "#perform" do
     before do
-      redis.set "#{request_id}:request", { request_data: form_data }.to_json
+      HubHop::redis.set "#{request_id}:request", { request_data: form_data }.to_json
       collector = instance_double(HubHop::Collector)
       allow(collector).to receive(:collect) { unfiltered_data }
       allow(HubHop::Collector).to receive(:new) { collector }
@@ -29,10 +27,10 @@ describe HubHop::Search do
     end
 
     after(:each) do
-      redis.del "#{request_id}:collected_flights"
-      redis.del "#{request_id}:completed"
-      redis.del "#{request_id}:results"
-      redis.del "#{request_id}:request"
+      HubHop::redis.del "#{request_id}:collected_flights"
+      HubHop::redis.del "#{request_id}:completed"
+      HubHop::redis.del "#{request_id}:results"
+      HubHop::redis.del "#{request_id}:request"
     end
 
     context "(the flights are not yet collected)" do
@@ -44,14 +42,14 @@ describe HubHop::Search do
       end
       it "records the inforamtion about flights in the DB" do
         perfrom_search
-        expect(redis.get "#{request_id}:collected_flights").
+        expect(HubHop::redis.get "#{request_id}:collected_flights").
           to eq(unfiltered_data.to_json)
       end
     end
 
     context "(the flights are already collected)" do
       before do
-        redis.set(
+        HubHop::redis.set(
           "#{request_id}:collected_flights",
           unfiltered_data.to_json
         )
@@ -82,12 +80,12 @@ describe HubHop::Search do
     end
     it "writes the results to the database" do
       perfrom_search
-      expect(redis.get "#{request_id}:results").
+      expect(HubHop::redis.get "#{request_id}:results").
         to eq({ cheapest_option: cheapest_option }.to_json)
     end
     it "marks the request in the database as completed" do
       perfrom_search
-      expect(redis.get "#{request_id}:completed").to eq true.to_json
+      expect(HubHop::redis.get "#{request_id}:completed").to eq true.to_json
     end
     it "creates the flight graph with zero results filtered out" do
       perfrom_search

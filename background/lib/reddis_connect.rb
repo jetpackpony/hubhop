@@ -1,9 +1,12 @@
+require 'redis'
+
 module HubHop
-  module RedisConnect
-    @@redis = false
-    def redis
-      @@redis ||
-        @@redis = Redis.new(url: ENV["REDIS_URL"], db: ENV['REDIS_DB_NUMBER'])
-    end
+
+  def self.redis
+    @redis || @redis = new_connection
+  end
+
+  def self.new_connection
+    Redis.new(url: ENV["REDIS_URL"], db: ENV['REDIS_DB_NUMBER'])
   end
 end

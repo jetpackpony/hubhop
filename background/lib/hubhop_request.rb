@@ -1,6 +1,5 @@
 module HubHop
   class Request
-    include HubHop::RedisConnect
     attr_reader :request_id
 
     def initialize(request_id = nil)
@@ -9,15 +8,15 @@ module HubHop
 
     def start_search(form_data)
       validate_input form_data
-      redis.set "#{request_id}:completed", "false"
-      redis.set "#{request_id}:request", { request_data: form_data }.to_json
+      HubHop::redis.set "#{request_id}:completed", "false"
+      HubHop::redis.set "#{request_id}:request", { request_data: form_data }.to_json
       Search.perform_async request_id
       request_id
     end
 
     def check
-      if redis.get("#{request_id}:completed") == "true"
-        redis.get("#{request_id}:results")
+      if HubHop::redis.get("#{request_id}:completed") == "true"
+        HubHop::redis.get("#{request_id}:results")
       else
         false
       end

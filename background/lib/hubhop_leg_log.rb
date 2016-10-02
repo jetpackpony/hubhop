@@ -1,7 +1,5 @@
 module HubHop
   class LegLog
-    include HubHop::RedisConnect
-
     def initialize(request_id, from, to, date)
       @req_id, @from, @to, @date = request_id, from, to, date
     end

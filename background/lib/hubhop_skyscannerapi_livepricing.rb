@@ -29,7 +29,7 @@ module HubHop
           @log.debug "Parsed api response: #{api_response.inspect}"
           if !session_complete?(api_response)
             @log.info "Session is not yet complete on SkyScanner's side"
-            return false 
+            return false
           end
           distill_session api_response
         rescue Exception => e
@@ -111,6 +111,7 @@ module HubHop
         }
         headers = {'Accept' => 'application/json'}
 
+        @log.info "Sending the request to url: #{uri}, params: #{params}, headers: #{headers}"
         i = 0
         while i < 10 do
           res = SkyScannerAPI::post uri, params, headers
@@ -122,7 +123,7 @@ module HubHop
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
             @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           end
         end
@@ -138,6 +139,8 @@ module HubHop
         #adr << "&pageindex=0"
         #adr << "&pagesize=3"
 
+        @log.info "Sending the request to url: #{adr}"
+        i = 0
         i = 0
         while i < 10 do
           res = SkyScannerAPI::perform_request adr
@@ -151,11 +154,11 @@ module HubHop
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
             @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           when '304'
             @log.info "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           end
         end

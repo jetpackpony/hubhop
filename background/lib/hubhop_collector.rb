@@ -88,7 +88,7 @@ module HubHop
           @log.info "Begin polling #{leg_id}"
           res = false
           i = 0
-          wait_a_bit 3
+          wait_a_bit 10
           start_time = Time.now
           while !res && (!time_passed?(start_time, 200) || i < 10) do
             res = api.poll_session session_url

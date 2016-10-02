@@ -122,7 +122,7 @@ module HubHop
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '429', '500'
             @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           end
         end
@@ -151,11 +151,11 @@ module HubHop
             raise "Bad request. #{res.code}. Body: #{res.body}"
           when '204', '429', '500'
             @log.info "Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           when '304'
             @log.info "Got 304 (not changed). Re-running the request. #{res.code}. Body: #{res.body}"
-            SkyScannerAPI::wait_a_bit i
+            SkyScannerAPI::wait_a_bit i + 5
             i += 1
           end
         end

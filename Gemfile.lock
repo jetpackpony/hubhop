@@ -29,6 +29,8 @@ GEM
     dotenv (2.1.1)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
+    haml (4.0.7)
+      tilt
     hashdiff (0.3.0)
     i18n (0.7.0)
     interception (0.5)
@@ -117,6 +119,7 @@ DEPENDENCIES
   capybara
   dotenv
   factory_girl
+  haml
   pry
   pry-byebug
   pry-doc

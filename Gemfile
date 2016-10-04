@@ -3,6 +3,7 @@ ruby '2.2.3'
 
 # Frontend gems
 gem 'sinatra'
+gem 'haml'
 
 # Gems required for background
 gem 'dotenv'

@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %meta{ charset: "UTF-8" }
+    %title Search them tickets
+  %body
+    %h1 Search request form
+    %form{ action: "/search", method: :post }
+      %fieldset
+        %legend Places
+        %label
+          From Airports
+          %input{ name: "from_places", type: "text", placeholder: "LED, DME", required: true, autofocus: true }
+        %label
+          Via Airports
+          %input{ name: "via_places", type: "text", placeholder: "MUC, BCN", required: true }
+        %label
+          To Airports
+          %input{ name: "to_places", type: "text", placeholder: "BKK, AUS", required: true }
+      %fieldset
+        %legend Departure dates
+        %label
+          From date
+          %input{ name: "from_date", type: "date", required: true }
+        %label
+          To date
+          %input{ name: "to_date", type: "date", required: true }
+        %label
+          Max hours for transit in a hub
+          %input{ name: "max_transit_time", type: "number", min: 2, max: 168, required: true }
+      %button{ type: "submit"} Submit

@@ -7,7 +7,9 @@ module HubHop
     end
 
     def start_search(form_data)
-      validate_input form_data
+      if HubHop::Validator.validate_input(form_data).size > 0
+        raise "Input data didn't pass validation" 
+      end
       HubHop::redis.set "#{request_id}:completed", "false"
       HubHop::redis.set "#{request_id}:request", { request_data: form_data }.to_json
       Search.perform_async request_id
@@ -15,36 +17,17 @@ module HubHop
     end
 
     def check
-      if HubHop::redis.get("#{request_id}:completed") == "true"
+      if complete?
         HubHop::redis.get("#{request_id}:results")
       else
         false
       end
     end
 
-    private
-
-    def validate_input(data)
-      validate_date data[:from_date]
-      validate_date data[:to_date]
-      if Date.parse(data[:from_date]) > Date.parse(data[:to_date])
-        raise "TO date must be at least the FROM date"
-      end
-      if data[:max_transit_time].to_i < 5
-        raise "The transit time has to be at least 5 hours"
-      end
-      if data[:max_transit_time].to_i > 186
-        raise "The transit time has to be at most 168 hours"
-      end
-    end
-
-    def validate_date(date)
-      if Date.parse(date) <= Date.today
-        raise "At least one of the dates is in the past"
-      end
-      if Date.parse(date) >= Date.today + 365
-        raise "At least one of the dates is in the future"
-      end
+    def complete?
+      complete = HubHop::redis.get("#{request_id}:completed")
+      raise "This request id doesn't exist" if complete.nil?
+      complete == "true"
     end
   end
 end

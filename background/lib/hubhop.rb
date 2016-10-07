@@ -2,7 +2,7 @@ require 'dotenv'
 require 'sidekiq'
 require 'byebug'
 require 'pry'
-Dotenv.load
+Dotenv.load "../.env"
 
 require_relative "./reddis_connect"
 require_relative "./hubhop_logger"

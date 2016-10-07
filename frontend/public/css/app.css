@@ -1,0 +1,28 @@
+body {
+  margin: 2em 5em;
+}
+input, select {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+fieldset {
+	margin-bottom: 2em;
+	padding: 1em;
+}
+label {
+  display: block;
+}
+.iata-link {
+  margin-bottom: 1em;
+}
+.line {
+	margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.error {
+  font-size: 0.8em;
+  color: red;
+}

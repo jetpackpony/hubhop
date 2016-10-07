@@ -8,7 +8,7 @@ module HubHop
 
     def start_search(form_data)
       if HubHop::Validator.validate_input(form_data).size > 0
-        raise "Input data didn't pass validation" 
+        raise "Input data didn't pass validation"
       end
       HubHop::redis.set "#{request_id}:completed", "false"
       HubHop::redis.set "#{request_id}:request", { request_data: form_data }.to_json
@@ -23,6 +23,8 @@ module HubHop
         false
       end
     end
+
+    private
 
     def complete?
       complete = HubHop::redis.get("#{request_id}:completed")

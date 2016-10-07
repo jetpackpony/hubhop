@@ -40,7 +40,7 @@ module HubHop
 
     def self.check_airports(list)
       list.map do |x|
-        airport_exists?(x) ? nil : "Airport '#{x}' doesn't exist"
+        airport_exists?(x) ? nil : "Airport #{x} doesn't exist"
       end
     end
 

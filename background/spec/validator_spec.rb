@@ -80,8 +80,8 @@ describe HubHop::Validator do
       it "adds an error if the airport doesn't exist" do
         err = HubHop::Validator.validate_input form_data_bad_airports
         expect(err.keys).to include :from_place, :via_place
-        expect(err[:from_place]).to include "Airport 'LOL' doesn't exist"
-        expect(err[:via_place]).to include "Airport 'BEE' doesn't exist"
+        expect(err[:from_place]).to include "Airport LOL doesn't exist"
+        expect(err[:via_place]).to include "Airport BEE doesn't exist"
       end
     end
   end

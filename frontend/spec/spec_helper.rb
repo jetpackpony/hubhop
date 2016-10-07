@@ -2,6 +2,7 @@ require 'rack/test'
 require 'rspec'
 require 'capybara'
 require 'capybara/dsl'
+require 'support/hubhop_helper'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -58,6 +59,7 @@ RSpec.configure do |config|
 
   config.include RSpecMixin
   config.include Capybara::DSL
+  config.include HubHopHelper
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.

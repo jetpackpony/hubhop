@@ -4,6 +4,8 @@ ruby '2.2.3'
 # Frontend gems
 gem 'sinatra'
 gem 'haml'
+gem 'sinatra-contrib'
+gem 'sinatra-flash'
 
 # Gems required for background
 gem 'dotenv'

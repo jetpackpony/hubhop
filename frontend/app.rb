@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative '../background/lib/hubhop'
+require File.expand_path('../../background/lib/hubhop', __FILE__)
 require 'sinatra/reloader' if development?
 require 'sinatra/flash'
 require 'json'

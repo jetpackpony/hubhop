@@ -61,7 +61,15 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include HubHopHelper
 
-# The settings below are suggested to provide a good initial experience
+  config.before(:suite) do
+    HubHop::redis.flushdb
+  end
+
+  config.after(:each) do |example|
+    HubHop::redis.flushdb
+  end
+
+# The settings belew are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
   # These two settings work together to allow you to limit a spec run

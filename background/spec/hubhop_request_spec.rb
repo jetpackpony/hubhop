@@ -10,16 +10,16 @@ describe HubHop::Request do
     data
   end
 
+  before do
+    allow(HubHop::Search).to receive(:perform_async)
+  end
+
   after(:all) do
     HubHop::redis.flushdb
   end
 
   describe "#start" do
     let(:redis_record) { HubHop::redis.get("#{request.request_id}:request") }
-
-    before do
-      allow(HubHop::Search).to receive(:perform_async)
-    end
 
     it "creates request record in the database" do
       request.start_search form_data

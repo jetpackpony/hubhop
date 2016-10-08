@@ -36,8 +36,10 @@ end
 
 get '/request/:req_id' do |req_id|
   @req_id = req_id
+  req = HubHop::Request.new(req_id)
+  @input_data = req.request
+  @results = req.check
   @flash_message = flash[:notice] || ""
-  @ready = HubHop::Request.new(req_id).check
   haml :check, layout: :app
 end
 

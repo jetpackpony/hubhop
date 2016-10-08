@@ -67,4 +67,15 @@ describe HubHop::Request do
       end
     end
   end
+
+  describe "#request" do
+    it "returns the input request data of the request" do
+      req = request
+      req.start_search form_data
+      expect(req.request).to eq form_data
+    end
+    it "raises an error if the request wasn't started" do
+      expect{request.request}.to raise_error "Failed to json.parse request data"
+    end
+  end
 end

@@ -24,6 +24,17 @@ module HubHop
       end
     end
 
+    def request
+      begin
+        JSON.parse(
+          HubHop::redis.get("#{@request_id}:request"),
+          symbolize_names: true
+        )[:request_data]
+      rescue => err
+        raise "Failed to json.parse request data"
+      end
+    end
+
     private
 
     def complete?

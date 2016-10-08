@@ -18,7 +18,7 @@ module HubHop
 
     def check
       if complete?
-        HubHop::redis.get("#{request_id}:results")
+        JSON.parse(HubHop::redis.get("#{request_id}:results")).deep_symbolize_keys
       else
         false
       end

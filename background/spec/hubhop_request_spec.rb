@@ -51,10 +51,10 @@ describe HubHop::Request do
     end
 
     context ">> request processing has completed," do
-      let(:results) { { results: true }.to_json }
+      let(:results) { { results: true } }
       it "returns hash with results" do
         HubHop::redis.set "#{request.request_id}:completed", "true"
-        HubHop::redis.set "#{request.request_id}:results", results
+        HubHop::redis.set "#{request.request_id}:results", results.to_json
         expect(request.check).to eq results
       end
     end

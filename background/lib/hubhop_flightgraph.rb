@@ -131,6 +131,7 @@ module HubHop
       @routes = {}
       @froms.each do |from|
         from_vertex = get_vertex(from, false, :from)
+        next if from_vertex.nil?
         @routes = @graph.
           dijkstra_shortest_paths(edges_map, from_vertex[:id]).
           select { |key, val| @tos.include? @vertices[key][:place] }.

@@ -5,6 +5,7 @@ module HubHop
       @logs = []
       @legs = []
       @req_id = @input['request_id']
+      @input[:dates] = calculate_dates @input[:from_date], @input[:to_date]
       HubHop::logger.debug "Initialized Collector with input: #{@input.inspect}, req_id: #{@req_id}"
     end
 
@@ -21,6 +22,14 @@ module HubHop
     end
 
     private
+
+    def calculate_dates(from, to)
+      (Date.parse(from)..Date.parse(to)).
+        inject([]) do |arr, date|
+          arr.push date.to_s
+          arr
+        end
+    end
 
     def start_all_legs
       # Create direct legs

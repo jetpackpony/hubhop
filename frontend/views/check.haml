@@ -1,0 +1,43 @@
+= @flash_message
+
+#check
+  #input_data
+    From Airports:
+    = @input_data[:from_place].join ", "
+    %br
+    Via Airports:
+    = @input_data[:via_place].join ", "
+    %br
+    To Airports:
+    = @input_data[:to_place].join ", "
+    %br
+    From date:
+    = @input_data[:from_date]
+    %br
+    To date:
+    = @input_data[:to_date]
+    %br
+    Max transit time:
+    = @input_data[:max_transit_time]
+    %br
+
+  #results
+    - if @results
+      - opt = @results[:cheapest_option]
+      %br
+      Here is the cheapest option:
+      %br
+      = "#{opt[:from]} -> #{opt[:via]} -> #{opt[:to]} for #{opt[:total_price]} RUB"
+      %br
+      %br
+      - opt[:legs].each do |leg|
+        = "#{leg[:from][:code]} -> #{leg[:to][:code]}"
+        %br
+        = "#{leg[:departure]} -> #{leg[:departure]}"
+        %br
+        = "#{leg[:price]} RUB"
+        %a{ href: leg[:deeplink] } Buy
+        %br
+    -else
+      The request is not yet complete
+      %input{ type: "button", value: "Check again", onclick: "document.location.reload(true)" }

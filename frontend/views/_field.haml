@@ -1,0 +1,9 @@
+.line
+  .field
+    %label
+      = label
+      %input{ name: name, type: type,
+        placeholder: default_for_type(type),
+        required: true, value: @form_data[name.to_sym] || "" }
+  - if @errors[name.to_sym]
+    .error= @errors[name.to_sym].first

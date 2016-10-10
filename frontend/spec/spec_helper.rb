@@ -1,9 +1,19 @@
-require 'support/factory_girl'
-require 'support/api_stubs'
-require 'webmock/rspec'
+require 'rack/test'
+require 'rspec'
+require 'capybara'
+require 'capybara/dsl'
+require 'support/hubhop_helper'
 
-# Disable all outgoing connections
-WebMock.disable_net_connect!(allow_localhost: true)
+ENV['RACK_ENV'] = 'test'
+
+require File.expand_path '../../app.rb', __FILE__
+
+module RSpecMixin
+  include Rack::Test::Methods
+  def app() Sinatra::Application end
+end
+
+Capybara.app = Sinatra::Application
 
 ENV['REDIS_DB_NUMBER'] = ENV['REDIS_DB_NUMBER_TEST']
 
@@ -49,6 +59,10 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.include RSpecMixin
+  config.include Capybara::DSL
+  config.include HubHopHelper
+
   config.before(:suite) do
     HubHop::redis.flushdb
   end
@@ -57,7 +71,7 @@ RSpec.configure do |config|
     HubHop::redis.flushdb
   end
 
-# The settings below are suggested to provide a good initial experience
+# The settings belew are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
   # These two settings work together to allow you to limit a spec run

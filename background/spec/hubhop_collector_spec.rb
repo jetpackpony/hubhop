@@ -24,7 +24,7 @@ describe HubHop::Collector do
       collector.collect
       expect(HubHop::Collector::Leg).
         to have_received(:new).
-        exactly(32).times
+        exactly(99).times
     end
 
     it "creates a Leg object with correct arguments" do
@@ -55,7 +55,7 @@ describe HubHop::Collector do
     it "returns an array of the leg query results" do
       coll = collector.collect
       expect(coll).to be_a Array
-      expect(coll.count).to eq 32
+      expect(coll.count).to eq 99
     end
 
     it "includes the expected results in the result array" do

@@ -1,0 +1,27 @@
+#form
+  - if @errors[:global]
+    .error= @errors[:global]
+  %h1 Search request form
+  %div.iata-link
+    Use IATA codes. Can be found here: 
+    %a{ href: "https://www.world-airport-codes.com/" } World Airport Codes
+  %form{ action: "/request/new", method: :post }
+    %fieldset
+      %legend Places
+      = haml :_field, locals: { label: "From Airports",
+        name: "from_place", type: "text" }
+      = haml :_field, locals: { label: "Via Airports",
+        name: "via_place", type: "text" }
+      = haml :_field, locals: { label: "To Airports",
+        name: "to_place", type: "text" }
+
+    %fieldset
+      %legend Departure dates
+      = haml :_field, locals: { label: "From date",
+        name: "from_date", type: "date" }
+      = haml :_field, locals: { label: "To date",
+        name: "to_date", type: "date" }
+      = haml :_field, locals: { label: "Max hours for transit in a hub",
+        name: "max_transit_time", type: "number" }
+    %fieldset
+      %button{ type: "submit"} Submit

@@ -9,6 +9,10 @@ describe HubHop::SkyScannerAPI do
     l
   end
   before do
+    throttle = instance_double HubHop::SkyScannerAPI::Throttle
+    allow(throttle).to receive(:delay) { |&b| b.call }
+    HubHop::SkyScannerAPI.class_variable_set(:@@throttle_post, throttle)
+    HubHop::SkyScannerAPI.class_variable_set(:@@throttle_get, throttle)
     allow(HubHop::SkyScannerAPI).to receive(:wait_a_bit)
   end
   describe HubHop::SkyScannerAPI::BrowseCache do

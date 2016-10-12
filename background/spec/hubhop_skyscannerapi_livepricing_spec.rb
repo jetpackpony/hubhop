@@ -10,10 +10,11 @@ describe HubHop::SkyScannerAPI::LivePricing do
     l
   end
   before do
+    throttle = instance_double HubHop::SkyScannerAPI::Throttle
+    allow(throttle).to receive(:delay) { |&b| b.call }
+    HubHop::SkyScannerAPI.class_variable_set(:@@throttle_post, throttle)
+    HubHop::SkyScannerAPI.class_variable_set(:@@throttle_get, throttle)
     allow(HubHop::SkyScannerAPI).to receive(:wait_a_bit)
-    allow(HubHop::SkyScannerAPI).to receive(:wait_for_poll_request_limit_to_shift)
-    allow(HubHop::SkyScannerAPI).to receive(:wait_for_create_request_limit_to_shift)
-    allow(HubHop::SkyScannerAPI).to receive(:time_passed?) { false }
   end
 
   let(:live_pricing_api) do

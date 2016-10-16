@@ -135,6 +135,7 @@ module HubHop
         @routes = @graph.
           dijkstra_shortest_paths(edges_map, from_vertex[:id]).
           select { |key, val| @tos.include? @vertices[key][:place] }.
+          reject { |key, val| val.nil? }.
           inject(@routes) do |res, (to, route)|
             name = "#{from}->#{@vertices[to][:place]}"
             res[name] = expand route, name

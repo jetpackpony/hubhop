@@ -1,6 +1,24 @@
 [
   "Zero results for: LED, LIS, 2016-12-01: http://skys.net",
   {
+    "price": 33333.3,
+    "deeplink": "http://skyscanner.net/deeplink",
+    "agent": {
+      "name": "Kupibilet"
+    },
+    "from": {
+      "code": "TLL"
+    },
+    "to": {
+      "code": "BKK"
+    },
+    "carrier": {
+      "name": "TAP Estonia"
+    },
+    "departure": "2016-12-02T05:00:00+00:00",
+    "arrival": "2016-12-02T07:55:00+00:00"
+  },
+  {
     "price": 7608.0,
     "deeplink": "http://skyscanner.net/deeplink",
     "agent": {

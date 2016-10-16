@@ -33,7 +33,7 @@
       - opt[:legs].each do |leg|
         = "#{leg[:from][:code]} -> #{leg[:to][:code]}"
         %br
-        = "#{leg[:departure]} -> #{leg[:departure]}"
+        = "#{leg[:departure]} -> #{leg[:arrival]}"
         %br
         = "#{leg[:price]} RUB"
         %a{ href: leg[:deeplink] } Buy

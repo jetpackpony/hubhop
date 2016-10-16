@@ -25,7 +25,7 @@ describe HubHop::FlightGraph do
   describe "#load_flights" do
     it "creates an edge for each flight in the list" do
       edge = graph.get_edge ["LED", false, :from], ["MUC", muc_date, :to]
-      expect(graph.edges.count).to eq 156
+      expect(graph.edges.count).to eq 157
       expect(edge).to be_truthy
       expect(edge[:price]).to eq 7395.0
       expect(edge[:start]).to eq true
@@ -67,7 +67,7 @@ describe HubHop::FlightGraph do
     it "keeps the lowest price in case of the parallel edges" do
       edge = graph.get_edge ["DME", false, :from], ["BCN", bcn_date_1, :to]
       expect(edge[:price]).to eq 6892.38
-      expect(edge[:flight_id]).to eq 9
+      expect(edge[:flight_id]).to eq 10
     end
   end
 
